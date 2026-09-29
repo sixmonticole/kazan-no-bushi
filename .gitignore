@@ -70,6 +70,10 @@ typings/
 .nuxt
 .output
 
+# déclarations générées par Nuxt / unplugin-vue-components
+components.d.ts
+auto-imports.d.ts
+
 # Nuxt generate
 dist
 

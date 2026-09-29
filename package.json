@@ -6,8 +6,11 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "lint": "oxlint app.vue components nuxt.config.ts",
-    "lint:fix": "oxlint --fix app.vue components nuxt.config.ts",
+    "lint": "oxlint app.vue components composables utils nuxt.config.ts",
+    "lint:fix": "oxlint --fix app.vue components composables utils nuxt.config.ts",
+    "typecheck": "nuxt typecheck",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
@@ -16,9 +19,12 @@
     "@types/luxon": "^3.7.1",
     "nuxt": "^3.8.2",
     "oxlint": "^1.86.0",
+    "prettier": "^3.9.9",
+    "typescript": "5",
     "unplugin-vue-components": "^31.0.0",
     "vue": "^3.3.8",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vue-tsc": "^3.3.11"
   },
   "dependencies": {
     "@primeuix/themes": "^2.0.3",
