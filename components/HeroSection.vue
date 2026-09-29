@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
             </Transition>
 
             <a
-                href="#programme"
+                href="#contenu"
                 class="mt-8 inline-flex flex-col items-center gap-2 text-[11px] font-bold uppercase tracking-[0.26em] text-plan-orange-400/90 hover:text-plan-orange-300 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-plan-orange-300"
             >
                 Découvrir

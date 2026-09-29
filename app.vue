@@ -61,10 +61,35 @@ useHead({
 
 let smoother: ReturnType<typeof ScrollSmoother.create> | null = null;
 
+/**
+ * Les liens d'ancre (`#contenu`, lien d'évitement) doivent passer par
+ * ScrollSmoother : sinon le navigateur décale le wrapper fixe et atterrit
+ * au mauvais endroit.
+ */
+function onAnchorClick(event: MouseEvent): void {
+    const link = (event.target as Element | null)?.closest?.('a[href^="#"]');
+    const hash = link?.getAttribute("href");
+
+    if (!hash || hash === "#") {
+        return;
+    }
+
+    const target = document.querySelector(hash);
+
+    if (!target) {
+        return;
+    }
+
+    event.preventDefault();
+    smoother?.scrollTo(target, true, "top top");
+}
+
 onMounted(() => {
     const reduceMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
     ).matches;
+
+    document.addEventListener("click", onAnchorClick);
 
     if (reduceMotion) {
         return;
@@ -79,16 +104,10 @@ onMounted(() => {
         effects: true,
         normalizeScroll: false,
     });
-
-    ScrollTrigger.create({
-        trigger: "#hero",
-        start: "top top",
-        pin: true,
-        pinSpacing: false,
-    });
 });
 
 onBeforeUnmount(() => {
+    document.removeEventListener("click", onAnchorClick);
     smoother?.kill();
     smoother = null;
     ScrollTrigger.killAll();
