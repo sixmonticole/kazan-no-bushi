@@ -1,69 +1,53 @@
 <script setup lang="ts">
-const cardPt = {
-    root: {
-        class: "!bg-plan-cream-100 !border-0 rounded-[18px] shadow-[0_24px_54px_-26px_rgba(6,12,33,0.75)] !text-left",
-    },
-};
+import { EVENT } from "~/utils/site";
+
+const cardPt = usePlanCardPt();
+
+const { address } = EVENT;
 </script>
 
 <template>
     <div class="relative pt-24 pb-24 px-5 overflow-hidden">
-        <!-- Background image -->
         <img
             src="/artenium.jpg"
-            alt="Vue aérienne de l'Artenium"
+            alt=""
+            width="1120"
+            height="698"
             class="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <!-- Fade veil -->
         <div
-            class="absolute inset-0"
-            style="
-                background: linear-gradient(
-                    180deg,
-                    #141f45 0%,
-                    rgba(20, 31, 69, 0.74) 22%,
-                    rgba(20, 31, 69, 0.78) 78%,
-                    #141f45 100%
-                );
-            "
+            class="section-veil absolute inset-0"
+            style="--veil-opacity: 0.76"
         />
 
         <div class="relative z-10 max-w-[1000px] mx-auto">
-            <div class="text-center">
-                <h2
-                    class="font-brush text-[clamp(28px,4.2vw,42px)] tracking-[0.03em] text-plan-cream-200"
-                    data-lag="0.1"
-                >
-                    Lieu
-                </h2>
-                <p
-                    class="mt-3 text-xs font-bold uppercase tracking-[0.3em] text-plan-ice-200/55"
-                    data-lag="0.15"
-                >
-                    Comment nous rejoindre
-                </p>
-            </div>
+            <SectionHeading title="Lieu" subtitle="Comment nous rejoindre" />
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-10">
-                <Card data-lag="0.15" :pt="cardPt">
+                <Card data-lag="0.15" :pt="cardPt" class="h-full">
                     <template #title>
                         <span
                             class="text-xs font-bold uppercase tracking-[0.2em] text-plan-bronze-600"
                         >
                             Adresse
                         </span>
-                        <div class="mt-3.5 text-xl font-black text-plan-navy-700">
-                            Artenium
-                        </div>
+                        <span
+                            class="mt-3.5 block text-xl font-black text-plan-navy-700"
+                        >
+                            {{ address.name }}
+                        </span>
                     </template>
                     <template #content>
-                        <p class="mt-1.5 text-[15px] leading-[1.6] text-plan-navy-700/75">
-                            4 Parc de l'Artière<br />
-                            63122 Ceyrat, France
-                        </p>
+                        <address
+                            class="mt-1.5 text-[15px] not-italic leading-[1.6] text-plan-navy-700/80"
+                        >
+                            {{ address.street }}<br />
+                            {{ address.postalCode }} {{ address.city }}, France
+                        </address>
                     </template>
                 </Card>
-                <Card data-lag="0.2" :pt="cardPt">
+
+                <Card data-lag="0.2" :pt="cardPt" class="h-full">
                     <template #title>
                         <span
                             class="text-xs font-bold uppercase tracking-[0.2em] text-plan-bronze-600"
@@ -72,7 +56,9 @@ const cardPt = {
                         </span>
                     </template>
                     <template #content>
-                        <p class="mt-3.5 text-[15px] leading-[1.6] text-plan-navy-700/75">
+                        <p
+                            class="mt-3.5 text-[15px] leading-[1.6] text-plan-navy-700/80"
+                        >
                             Parking gratuit sur place.
                         </p>
                     </template>

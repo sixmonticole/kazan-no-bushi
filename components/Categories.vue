@@ -1,93 +1,66 @@
 <script setup lang="ts">
-const cardPt = {
-    root: {
-        class: "!bg-plan-cream-100 !border-0 rounded-[18px] shadow-[0_24px_54px_-26px_rgba(6,12,33,0.75)] !text-left",
-    },
-};
+import { CATEGORIES } from "~/utils/content";
 
-const categories = [
-    {
-        name: "Jeunes",
-        details: ["Individuels", "Catégories par âge"],
-    },
-    {
-        name: "Femmes",
-        details: ["Équipes de 3", "Tous niveaux"],
-    },
-    {
-        name: "Open",
-        details: ["Équipes de 3", "Tous niveaux et mixte"],
-    },
-];
+const cardPt = usePlanCardPt();
 </script>
 
 <template>
     <div class="relative pt-24 pb-24 px-5 text-center overflow-hidden">
-        <!-- Background image -->
         <img
             src="/competition.jpg"
-            alt="Kenshi en armure"
+            alt=""
+            width="1500"
+            height="1019"
             class="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <!-- Fade veil -->
         <div
-            class="absolute inset-0"
-            style="
-                background: linear-gradient(
-                    180deg,
-                    #141f45 0%,
-                    rgba(20, 31, 69, 0.7) 20%,
-                    rgba(20, 31, 69, 0.74) 80%,
-                    #141f45 100%
-                );
-            "
+            class="section-veil absolute inset-0"
+            style="--veil-opacity: 0.72"
         />
 
         <div class="relative z-10 max-w-[1000px] mx-auto">
-            <h2
-                class="font-brush text-[clamp(28px,4.2vw,42px)] tracking-[0.03em] text-plan-cream-200"
-                data-lag="0.1"
-            >
-                Catégories de la compétition
-            </h2>
-            <p
-                class="mt-3 text-xs font-bold uppercase tracking-[0.3em] text-plan-ice-200/55"
-                data-lag="0.15"
-            >
-                Ouvertes à tous les niveaux
-            </p>
+            <SectionHeading
+                title="Catégories de la compétition"
+                subtitle="Ouvertes à tous les niveaux"
+            />
 
-            <div
-                class="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-11 text-left"
+            <ul
+                class="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-11 text-left list-none p-0"
             >
-                <Card
-                    v-for="(cat, index) in categories"
+                <li
+                    v-for="(cat, index) in CATEGORIES"
                     :key="cat.name"
                     :data-lag="0.1 + index * 0.05"
-                    :pt="cardPt"
                 >
-                    <template #title>
-                        <span class="text-[19px] font-black text-plan-navy-700">{{
-                            cat.name
-                        }}</span>
-                        <div class="w-8 h-0.5 bg-plan-orange-400 my-3" />
-                    </template>
-                    <template #content>
-                        <ul class="flex flex-col gap-2.5 text-[15px] text-plan-navy-700/78">
-                            <li
-                                v-for="detail in cat.details"
-                                :key="detail"
-                                class="flex items-baseline gap-2.5"
+                    <Card :pt="cardPt" class="h-full">
+                        <template #title>
+                            <span
+                                class="text-[19px] font-black text-plan-navy-700"
                             >
-                                <span
-                                    class="w-[5px] h-[5px] rounded-full bg-plan-navy-700/40 shrink-0 -translate-y-[3px]"
-                                />
-                                {{ detail }}
-                            </li>
-                        </ul>
-                    </template>
-                </Card>
-            </div>
+                                {{ cat.name }}
+                            </span>
+                            <div class="w-8 h-0.5 bg-plan-orange-400 my-3" />
+                        </template>
+                        <template #content>
+                            <ul
+                                class="flex flex-col gap-2.5 text-[15px] text-plan-navy-700/78 list-none p-0"
+                            >
+                                <li
+                                    v-for="detail in cat.details"
+                                    :key="detail"
+                                    class="flex items-baseline gap-2.5"
+                                >
+                                    <span
+                                        class="w-[5px] h-[5px] rounded-full bg-plan-navy-700/40 shrink-0 -translate-y-[3px]"
+                                        aria-hidden="true"
+                                    />
+                                    {{ detail }}
+                                </li>
+                            </ul>
+                        </template>
+                    </Card>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
