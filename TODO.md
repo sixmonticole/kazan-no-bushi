@@ -29,13 +29,14 @@ aujourd'hui des valeurs provisoires, à remplacer par les vraies.
 
 ## Avant le week-end
 
-- [ ] Relancer `bun run build` après toute modification du contenu, pour
-      regénérer `public/kazan-no-bushi-2026.pdf`.
+- [ ] Relancer `bun run pdf` (ou `bun run build:pdf`) après toute modification
+      du contenu, puis committer `public/kazan-no-bushi-2026.pdf`.
 - [ ] Vérifier le livret imprimé (marges, coupures, lisibilité).
 - [ ] Relire les textes français (accents, typographie).
 
 ## Améliorations techniques optionnelles
 
+- [ ] Vérifier en CI que le PDF committé est à jour (régénérer et comparer).
 - [ ] Enchaîner `bun run pdf` au `preview`, pour tester le PDF sur le build.
 - [ ] Ajouter les tests d'impression automatisés (nombre de pages, format A4).
 - [ ] Vérifier le rendu du livret sur mobile et tablette.
@@ -44,7 +45,9 @@ aujourd'hui des valeurs provisoires, à remplacer par les vraies.
 ## Notes
 
 - Le PDF est généré par `scripts/build-pdf.ts` via Puppeteer (Chrome headless).
-  `bun run build` le régénère automatiquement avant le build.
+  Il n'est **pas** régénéré par `bun run build` ni par la CI, pour ne pas
+  télécharger Chrome à chaque run : c'est la version committée qui est servie.
+  Le régénérer avec `bun run pdf` ou `bun run build:pdf`.
 - `bun run pdf` fonctionne seul : le script démarre un serveur Nuxt temporaire
   s'il n'y en a pas.
 - Le livret ne passe pas par ScrollSmoother : son wrapper `position: fixed`

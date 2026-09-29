@@ -1,4 +1,9 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    // Nuxt génère `types: []` : les scripts Node (`scripts/`) ont besoin
+    // des types de Node pour `node:fs`, `process`, etc.
+    "types": ["node"]
+  }
 }

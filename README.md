@@ -38,17 +38,21 @@ bun run dev
 
 ```bash
 bun run dev          # serveur de développement
-bun run build        # génère le PDF puis build de production
-bun run generate     # génère le PDF puis export statique
-bun run preview      # prévisualisation du build
+bun run build        # build de production
+bun run generate     # export statique
+bun run build:pdf    # régénère le PDF puis build
 bun run pdf          # régénère public/kazan-no-bushi-2026.pdf
+bun run preview      # prévisualisation du build
 bun run lint         # linter oxlint (strict)
 bun run lint:fix     # linter + corrections automatiques
 ```
 
-`bun run build` et `bun run generate` régénèrent le PDF avant de builder, pour
-que le fichier soit embarqué dans `.output/public/`. `bun run pdf` fonctionne
-seul : le script démarre un serveur Nuxt temporaire s'il n'y en a pas.
+`bun run build` et `bun run generate` n'appellent pas Puppeteer : la CI reste
+rapide et le PDF committé est embarqué tel quel. Pour le régénérer et builder
+d'un coup, utiliser `bun run build:pdf` (ou `bun run generate:pdf`).
+
+`bun run pdf` fonctionne seul : le script démarre un serveur Nuxt temporaire
+s'il n'y en a pas.
 
 Il n'y a pas de tests automatisés ni de script `typecheck`. Une modification est considérée valide quand `bun run lint` et `bun run build` passent, et que le rendu a été vérifié dans le navigateur.
 
@@ -78,7 +82,11 @@ Le script `scripts/build-pdf.ts` ouvre `/guide` dans Chrome headless
 
 **Le PDF doit être régénéré après toute modification du contenu.** C'est le
 compromis de l'approche : le livret web et le PDF ne se mettent pas à jour
-ensemble. `bun run build` s'en charge automatiquement.
+ensemble. Utiliser `bun run pdf`, ou `bun run build:pdf` pour régénérer et
+builder d'un coup.
+
+Le PDF n'est pas régénéré par `bun run build` ni par la CI, pour ne pas
+télécharger Chrome à chaque run : c'est la version committée qui est servie.
 
 Le livret est exclu de ScrollSmoother (voir `app.vue`) : son wrapper
 `position: fixed` tronquait l'impression.
