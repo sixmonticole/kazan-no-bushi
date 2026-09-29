@@ -1,0 +1,57 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  // Linter strict du projet Kazan No Bushi (Nuxt 3 / Vue 3 / TypeScript).
+  // Toutes les catégories sérieuses sont en erreur. Les règles de restriction
+  // trop opinionnées (kebab-case, tri de clés, magic numbers, etc.) sont
+  // volontairement désactivées : elles contrediraient Nuxt (composants
+  // PascalCase auto-importés) et le style existant du dépôt.
+  "plugins": ["vue", "import", "promise", "typescript", "unicorn", "oxc"],
+  // Globals fournis par Nuxt (auto-imports) et par le navigateur.
+  "globals": {
+    "defineNuxtConfig": "readonly",
+    "defineNuxtComponent": "readonly",
+    "definePageMeta": "readonly",
+    "useHead": "readonly",
+    "useSeoMeta": "readonly",
+    "useAsyncData": "readonly",
+    "useFetch": "readonly",
+    "ref": "readonly",
+    "computed": "readonly",
+    "reactive": "readonly",
+    "watch": "readonly",
+    "onMounted": "readonly",
+    "onBeforeUnmount": "readonly",
+    "onUnmounted": "readonly",
+    "setInterval": "readonly",
+    "clearInterval": "readonly",
+    "setTimeout": "readonly",
+    "clearTimeout": "readonly"
+  },
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "error",
+    "pedantic": "error"
+  },
+  "rules": {
+    "no-unused-vars": "error",
+    "no-undef": "error",
+    "typescript/no-explicit-any": "error",
+    "typescript/no-non-null-assertion": "error",
+    "typescript/consistent-type-imports": "error",
+    "typescript/no-floating-promises": "error",
+    "import/no-cycle": "error"
+  },
+  "overrides": [
+    {
+      "files": ["nuxt.config.ts", "app.vue"],
+      "rules": {
+        // Nuxt impose defineNuxtConfig par défaut et les options du framework.
+        "import/no-default-export": "off",
+        "sort-keys": "off",
+        "new-cap": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [".nuxt", ".output", "dist", "node_modules"]
+}
