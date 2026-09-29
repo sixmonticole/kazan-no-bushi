@@ -18,7 +18,7 @@
 import { gsap } from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { EVENT, SITE_NAME } from "~/utils/site";
+import { EVENT_JSON_LD } from "~/utils/jsonld";
 
 useSiteSeo();
 
@@ -26,35 +26,7 @@ useHead({
     script: [
         {
             type: "application/ld+json",
-            innerHTML: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "SportsEvent",
-                name: EVENT.name,
-                description: EVENT.description,
-                startDate: EVENT.startDate,
-                endDate: EVENT.endDate,
-                eventAttendanceMode:
-                    "https://schema.org/OfflineEventAttendanceMode",
-                eventStatus: "https://schema.org/EventScheduled",
-                url: EVENT.url,
-                image: [EVENT.image],
-                location: {
-                    "@type": "Place",
-                    name: EVENT.address.name,
-                    address: {
-                        "@type": "PostalAddress",
-                        streetAddress: EVENT.address.street,
-                        addressLocality: EVENT.address.city,
-                        postalCode: EVENT.address.postalCode,
-                        addressCountry: EVENT.address.country,
-                    },
-                },
-                organizer: {
-                    "@type": "Organization",
-                    name: SITE_NAME,
-                    url: EVENT.url,
-                },
-            }),
+            innerHTML: JSON.stringify(EVENT_JSON_LD),
         },
     ],
 });
