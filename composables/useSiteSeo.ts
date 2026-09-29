@@ -22,20 +22,31 @@ const FONT_LINKS = [
     },
 ] as const;
 
+interface SiteSeoOverride {
+    title?: string;
+    description?: string;
+    /** URL canonique de la page, relative au site (`/guide`). */
+    path?: string;
+}
+
 /**
- * Balises SEO et réseaux sociaux de la page unique.
+ * Balises SEO et réseaux sociaux. Les pages secondaires passent un titre et
+ * une description ; par défaut, on retombe sur la page unique de l'édition.
  * Source de vérité unique : `utils/site.ts`.
  */
-export function useSiteSeo(): void {
+export function useSiteSeo(override: SiteSeoOverride = {}): void {
+    const title = override.title ?? SEO.title;
+    const description = override.description ?? SEO.description;
     const ogImage = `${SITE_URL}/og-image.jpg`;
+    const canonical = `${SITE_URL}${override.path ?? ""}`;
 
     useSeoMeta({
-        title: SEO.title,
-        description: SEO.description,
+        title,
+        description,
         ogType: "website",
-        ogTitle: SEO.title,
-        ogDescription: SEO.description,
-        ogUrl: SITE_URL,
+        ogTitle: title,
+        ogDescription: description,
+        ogUrl: canonical,
         ogLocale: "fr_FR",
         ogSiteName: SITE_NAME,
         ogImage,
@@ -43,14 +54,18 @@ export function useSiteSeo(): void {
         ogImageHeight: OG_HEIGHT,
         ogImageAlt: `${SITE_NAME}, stage de kendo à Ceyrat`,
         twitterCard: "summary_large_image",
-        twitterTitle: SEO.title,
-        twitterDescription: SEO.description,
+        twitterTitle: title,
+        twitterDescription: description,
         twitterImage: ogImage,
     });
 
     useHead({
         htmlAttrs: { lang: "fr" },
         meta: [{ name: "theme-color", content: "#141f45" }],
-        link: [...ICON_LINKS, ...FONT_LINKS],
+        link: [
+            { rel: "canonical", href: canonical },
+            ...ICON_LINKS.slice(1),
+            ...FONT_LINKS,
+        ],
     });
 }

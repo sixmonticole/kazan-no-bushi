@@ -28,18 +28,22 @@
     "usePlanCardPt": "readonly",
     "useCountdown": "readonly",
     "useSiteSeo": "readonly",
+    "useRoute": "readonly",
+    "nextTick": "readonly",
+    "process": "readonly",
+    "console": "readonly",
     "window": "readonly",
     "document": "readonly",
     "setInterval": "readonly",
     "clearInterval": "readonly",
     "setTimeout": "readonly",
-    "clearTimeout": "readonly"
+    "clearTimeout": "readonly",
   },
   "categories": {
     "correctness": "error",
     "suspicious": "error",
     "perf": "error",
-    "pedantic": "error"
+    "pedantic": "error",
   },
   "rules": {
     "no-unused-vars": "error",
@@ -48,7 +52,10 @@
     "typescript/no-non-null-assertion": "error",
     "typescript/consistent-type-imports": "error",
     "typescript/no-floating-promises": "error",
-    "import/no-cycle": "error"
+    "import/no-cycle": "error",
+    // Les fichiers de données (`utils/content.ts`) grandissent par nature :
+    // le découpage en modules multiples n'apporterait rien.
+    "max-lines": "off",
   },
   "overrides": [
     {
@@ -57,9 +64,9 @@
         // Nuxt impose defineNuxtConfig par défaut et les options du framework.
         "import/no-default-export": "off",
         "sort-keys": "off",
-        "new-cap": "off"
-      }
-    }
+        "new-cap": "off",
+      },
+    },
   ],
-  "ignorePatterns": [".nuxt", ".output", "dist", "node_modules"]
+  "ignorePatterns": [".nuxt", ".output", "dist", "node_modules"],
 }
