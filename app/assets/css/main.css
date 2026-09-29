@@ -15,3 +15,38 @@
     --color-plan-orange-300: #f3c089;
     --color-plan-bronze-600: #a8702c;
 }
+
+@layer components {
+    /* Voile navy posé sur les photos de section, avec fondu haut et bas
+       vers la couleur de fond. L'opacité centrale est réglable par section. */
+    .section-veil {
+        background: linear-gradient(
+            180deg,
+            var(--color-plan-navy-900) 0%,
+            rgba(20, 31, 69, var(--veil-opacity, 0.72)) 22%,
+            rgba(20, 31, 69, var(--veil-opacity, 0.72)) 78%,
+            var(--color-plan-navy-900) 100%
+        );
+    }
+
+    /* Halo orange en haut de section, posé sur le navy. */
+    .section-halo {
+        background-image: radial-gradient(
+            var(--halo-size, 120% 80%) at 50% -10%,
+            rgba(232, 164, 92, var(--halo-opacity, 0.34)) 0%,
+            rgba(232, 164, 92, calc(var(--halo-opacity, 0.34) * 0.2)) 44%,
+            transparent 72%
+        );
+        background-repeat: no-repeat;
+        background-position: top center;
+    }
+
+    /* Trait vertical dégradé sous le lien « Découvrir » du hero. */
+    .hero-scroll-line {
+        background: linear-gradient(
+            180deg,
+            rgba(232, 164, 92, 0.8),
+            transparent
+        );
+    }
+}
