@@ -2,7 +2,7 @@
 
 <template>
     <section class="relative z-10 bg-plan-navy-900 font-zen">
-        <HightLights />
+        <Highlights />
         <Categories />
         <Program />
         <Venue />
