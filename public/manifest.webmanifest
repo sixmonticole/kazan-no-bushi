@@ -1,0 +1,29 @@
+{
+    "name": "Kazan No Bushi — XIVème édition",
+    "short_name": "Kazan No Bushi",
+    "description": "Stage, passage de grade et compétition de kendo — les 28 et 29 novembre 2026 à l'Artenium, Ceyrat.",
+    "lang": "fr",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "theme_color": "#141f45",
+    "background_color": "#141f45",
+    "icons": [
+        {
+            "src": "/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
