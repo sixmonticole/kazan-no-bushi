@@ -1,0 +1,33 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  // Configuration OpenCode propre au projet Kazan No Bushi.
+  // Voir AGENTS.md pour les conventions détaillées.
+  "formatter": true,
+  "watcher": {
+    "ignore": [".nuxt/**", ".output/**", "dist/**", "node_modules/**"]
+  },
+  "permissions": [
+    // Git en lecture libre, mais jamais de push/force/rebase automatique.
+    { "action": "shell", "resource": "git status *", "effect": "allow" },
+    { "action": "shell", "resource": "git diff *", "effect": "allow" },
+    { "action": "shell", "resource": "git log *", "effect": "allow" },
+    { "action": "shell", "resource": "git show *", "effect": "allow" },
+    { "action": "shell", "resource": "git push *", "effect": "deny" },
+    { "action": "shell", "resource": "git reset --hard *", "effect": "deny" },
+    // Les builds, le serveur de dev et le linter sont sûrs à lancer.
+    { "action": "shell", "resource": "bun install *", "effect": "allow" },
+    { "action": "shell", "resource": "bun run *", "effect": "allow" },
+    { "action": "shell", "resource": "bunx oxlint *", "effect": "allow" },
+    { "action": "shell", "resource": "bunx *", "effect": "ask" }
+  ],
+  "agents": {
+    "reviewer": {
+      "description": "Relit les changements Nuxt/Vue sans modifier les fichiers",
+      "mode": "subagent",
+      "permissions": [
+        { "action": "edit", "resource": "*", "effect": "deny" },
+        { "action": "shell", "resource": "*", "effect": "deny" }
+      ]
+    }
+  }
+}
