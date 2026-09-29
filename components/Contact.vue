@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { SITE_NAME } from "~/utils/site";
-
-const year = new Date().getFullYear();
+import { EDITION_YEAR, SITE_NAME } from "~/utils/site";
 </script>
 
 <template>
@@ -38,7 +36,7 @@ const year = new Date().getFullYear();
         </ul>
 
         <p class="mt-14 text-xs text-plan-ice-200/60">
-            {{ SITE_NAME }} — {{ year }}
+            {{ SITE_NAME }} — {{ EDITION_YEAR }}
         </p>
     </div>
 </template>

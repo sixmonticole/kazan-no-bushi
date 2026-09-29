@@ -2,6 +2,9 @@ export const SITE_URL = "https://kazan-no-bushi.fr";
 export const SITE_NAME = "Kazan No Bushi";
 export const EDITION = "XIVème édition";
 
+/** Année de l'édition, fixée dans les données (jamais lue depuis l'horloge). */
+export const EDITION_YEAR = 2026;
+
 export const CONTACT_EMAIL = "kendo@asm-omnisports.com";
 
 export const INSTAGRAM_URL = "https://www.instagram.com/asm_kendo/";

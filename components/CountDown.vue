@@ -17,6 +17,14 @@ const units = computed(() => [
     { value: seconds.value, label: "Secondes" },
 ]);
 
+/** Gabarit rendu côté serveur, avant que le décompte ne soit calculé. */
+const PLACEHOLDER_UNITS = [
+    { value: "--", label: "Jours" },
+    { value: "--", label: "Heures" },
+    { value: "--", label: "Minutes" },
+    { value: "--", label: "Secondes" },
+] as const;
+
 const formattedDate = computed(() =>
     target.setLocale("fr").toFormat("d MMMM yyyy 'à' HH'h'mm"),
 );
@@ -24,39 +32,30 @@ const formattedDate = computed(() =>
 
 <template>
     <div class="mt-9 px-4">
-        <p v-if="isOver" class="text-plan-ice-200 text-base font-medium">
-            L'édition 2026 est terminée. Merci aux participants !
-        </p>
+        <!--
+            Le décompte dépend de l'heure courante : il n'est rendu que côté
+            client pour que l'hydratation ne compare pas deux valeurs
+            décalées d'une seconde. Le gabarit de repli garde la mise en page
+            dans le HTML prérendu.
+        -->
+        <ClientOnly>
+            <p v-if="isOver" class="text-plan-ice-200 text-base font-medium">
+                L'édition 2026 est terminée. Merci aux participants !
+            </p>
 
-        <div
-            v-else
-            class="flex flex-wrap justify-center gap-3.5"
-            role="timer"
-            aria-live="polite"
-            :aria-label="`Début de l'événement dans ${days} jours`"
-        >
-            <Card
-                v-for="unit in units"
-                :key="unit.label"
-                class="min-w-[104px]"
-                :pt="cardPt"
+            <div
+                v-else
+                role="timer"
+                aria-live="polite"
+                :aria-label="`Début de l'événement dans ${days} jours`"
             >
-                <template #title>
-                    <span
-                        class="block text-[34px] font-black leading-none tabular-nums text-plan-bronze-600"
-                    >
-                        {{ unit.value }}
-                    </span>
-                </template>
-                <template #content>
-                    <p
-                        class="mt-2 text-[11px] font-bold uppercase tracking-[0.2em] text-plan-navy-700/60"
-                    >
-                        {{ unit.label }}
-                    </p>
-                </template>
-            </Card>
-        </div>
+                <CountDownCards :units="units" :pt="cardPt" />
+            </div>
+
+            <template #fallback>
+                <CountDownCards :units="PLACEHOLDER_UNITS" :pt="cardPt" />
+            </template>
+        </ClientOnly>
 
         <p class="sr-only">
             L'événement commence le {{ formattedDate }} (heure de Paris).

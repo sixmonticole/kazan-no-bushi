@@ -43,31 +43,28 @@ export function useCountdown() {
         }
     }
 
-    function update(): void {
-        const now = DateTime.now().setZone(EVENT_TIMEZONE);
-
-        if (now >= target) {
-            days.value = 0;
-            hours.value = 0;
-            minutes.value = 0;
-            seconds.value = 0;
-            isOver.value = true;
-            stop();
-            return;
-        }
-
-        const parts = remainingParts(target);
+    function applyParts(parts: CountdownValues): void {
         days.value = parts.days;
         hours.value = parts.hours;
         minutes.value = parts.minutes;
         seconds.value = parts.seconds;
     }
 
-    // Calcule une première fois hors du cycle de montage pour que le HTML
-    // prérendu affiche déjà les bonnes valeurs avant l'hydratation.
-    update();
+    function update(): void {
+        const now = DateTime.now().setZone(EVENT_TIMEZONE);
+
+        if (now >= target) {
+            applyParts({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+            isOver.value = true;
+            stop();
+            return;
+        }
+
+        applyParts(remainingParts(target));
+    }
 
     onMounted(() => {
+        update();
         interval = setInterval(update, 1000);
     });
 
