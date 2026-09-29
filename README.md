@@ -8,14 +8,15 @@ Site mono-page en français, généré en statique avec Nuxt 3.
 
 ## Stack
 
-| Outil | Usage |
-| --- | --- |
-| [Nuxt 3](https://nuxt.com) + Vue 3 | Framework, SSR / prérendu |
-| [PrimeVue 4](https://primevue.org) | Composants (preset Aura personnalisé) |
-| [Tailwind CSS 4](https://tailwindcss.com) | Styles utilitaires et thème |
-| [GSAP](https://gsap.com) | Animations de scroll (`ScrollTrigger`, `ScrollSmoother`) |
-| [Luxon](https://moment.github.io/luxon/) | Compte à rebours jusqu'à l'événement |
-| [oxlint](https://oxc.rs) | Linter strict |
+| Outil                                     | Usage                                                    |
+| ----------------------------------------- | -------------------------------------------------------- |
+| [Nuxt 3](https://nuxt.com) + Vue 3        | Framework, SSR / prérendu                                |
+| [PrimeVue 4](https://primevue.org)        | Composants (preset Aura personnalisé)                    |
+| [Tailwind CSS 4](https://tailwindcss.com) | Styles utilitaires et thème                              |
+| [GSAP](https://gsap.com)                  | Animations de scroll (`ScrollTrigger`, `ScrollSmoother`) |
+| [Luxon](https://moment.github.io/luxon/)  | Compte à rebours jusqu'à l'événement                     |
+| [Puppeteer](https://pptr.dev)             | Génération du livret PDF (dev uniquement)                |
+| [oxlint](https://oxc.rs)                  | Linter strict                                            |
 
 Gestionnaire de paquets : **bun**.
 
@@ -37,20 +38,61 @@ bun run dev
 
 ```bash
 bun run dev          # serveur de développement
-bun run build        # build de production
-bun run generate     # génération statique
+bun run build        # génère le PDF puis build de production
+bun run generate     # génère le PDF puis export statique
 bun run preview      # prévisualisation du build
+bun run pdf          # régénère public/kazan-no-bushi-2026.pdf
 bun run lint         # linter oxlint (strict)
 bun run lint:fix     # linter + corrections automatiques
 ```
 
+`bun run build` et `bun run generate` régénèrent le PDF avant de builder, pour
+que le fichier soit embarqué dans `.output/public/`. `bun run pdf` fonctionne
+seul : le script démarre un serveur Nuxt temporaire s'il n'y en a pas.
+
 Il n'y a pas de tests automatisés ni de script `typecheck`. Une modification est considérée valide quand `bun run lint` et `bun run build` passent, et que le rendu a été vérifié dans le navigateur.
+
+## Pages
+
+| Route    | Description                                                                 |
+| -------- | --------------------------------------------------------------------------- |
+| `/`      | Page principale : hero, programme, catégories, lieu, inscriptions, contacts |
+| `/guide` | Livret d'information feuilletable, exportable en PDF                        |
+
+## Livret d'information
+
+Le livret (`/guide`) est construit à partir des mêmes données que le site
+(`utils/content.ts`), ce qui évite toute divergence. Il reprend la charte
+graphique du site sur des pages A4.
+
+Il se feuillette à l'écran (flèches, clavier, plein écran) et se télécharge en
+PDF. Le PDF est un **vrai fichier** généré à l'avance, avec du texte
+sélectionnable — pas des images :
+
+```bash
+bun run pdf          # régénère public/kazan-no-bushi-2026.pdf
+```
+
+Le script `scripts/build-pdf.ts` ouvre `/guide` dans Chrome headless
+(Puppeteer), force le média `print` et imprime les 8 pages en A4.
+
+**Le PDF doit être régénéré après toute modification du contenu.** C'est le
+compromis de l'approche : le livret web et le PDF ne se mettent pas à jour
+ensemble. `bun run build` s'en charge automatiquement.
+
+Le livret est exclu de ScrollSmoother (voir `app.vue`) : son wrapper
+`position: fixed` tronquait l'impression.
 
 ## Structure
 
 ```text
-app.vue                  # layout racine : wrappers GSAP + HeroSection + InfoSection
+app.vue                  # coquille de l'application : wrappers GSAP + NuxtPage
 nuxt.config.ts           # config Nuxt, preset PrimeVue, couleurs, SEO / Open Graph
+pages/                   # routes (un dossier pages/ fait de app.vue la coquille)
+  index.vue              # page principale : hero + sections de contenu
+  guide.vue              # livret d'information feuilletable (A4)
+scripts/
+  build-pdf.ts           # génère public/kazan-no-bushi-2026.pdf
 components/              # composants auto-importés (PascalCase)
   HeroSection.vue        # hero plein écran, épinglé par ScrollTrigger (#hero)
   InfoSection.vue        # regroupe les sections de contenu + footer
@@ -63,10 +105,14 @@ components/              # composants auto-importés (PascalCase)
   Partners.vue           # partenaires
   Contact.vue            # moyens de contact
 app/assets/css/main.css  # styles globaux + thème Tailwind
-public/                  # images, logos, favicon, partenaires/
+public/                  # images, logos, favicon, partenaires/, livret PDF
+TODO.md                  # tâches en cours pour l'édition
 .opencode/               # configuration OpenCode (agents, commandes, permissions)
 .oxlintrc.jsonc          # configuration du linter
 ```
+
+Le livret PDF (`public/kazan-no-bushi-2026.pdf`) est un fichier généré : il
+est committé pour être servi, mais il ne faut pas l'éditer à la main.
 
 ## Conventions
 

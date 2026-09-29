@@ -2,9 +2,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "build": "bun run pdf && nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
+    "generate": "bun run pdf && nuxt generate",
     "preview": "nuxt preview",
     "lint": "oxlint app.vue components composables pages scripts utils nuxt.config.ts",
     "lint:fix": "oxlint --fix app.vue components composables pages scripts utils nuxt.config.ts",
