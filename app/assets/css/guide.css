@@ -1,0 +1,855 @@
+/* ---------------------------------------------------------------------------
+ * Livret d'information — Kazan No Bushi
+ *
+ * Styles du lecteur (barre de contrôles, pages A4) et du contenu imprimé.
+ * Le livret reprend la charte du site mais s'affiche sur fond crème plein
+ * écran : il ne dépend ni de ScrollSmoother ni du fond navy de la page unique.
+ * ------------------------------------------------------------------------ */
+.guide-page {
+    --guide-ink: #1b2a5b;
+    --guide-cream: #f8f1e3;
+    --guide-navy: #141f45;
+    --guide-orange: #e8a45c;
+    --guide-bronze: #a8702c;
+    --guide-paper: #fffdf8;
+    font-family: var(--font-zen, system-ui, sans-serif);
+    color: var(--guide-ink);
+    background: var(--guide-cream);
+    /* Pas de scroll : la page tient exactement dans la fenêtre. */
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Contrôles flottants : icônes transparentes posées au-dessus du livret.
+ * Retour à gauche, téléchargement et plein écran à droite. */
+.guide-controls {
+    position: fixed;
+    top: 16px;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.guide-controls--left {
+    left: 16px;
+}
+
+.guide-controls--right {
+    right: 16px;
+}
+
+.guide-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    /* Icône indigo : lisible sur le fond crème du lecteur, et sur un fond
+     * sombre grâce au halo crème qui la détache. */
+    color: var(--guide-navy);
+    cursor: pointer;
+    text-decoration: none;
+    filter: drop-shadow(0 0 2px var(--guide-cream))
+        drop-shadow(0 0 4px var(--guide-cream))
+        drop-shadow(0 1px 6px rgba(6, 12, 33, 0.35));
+    opacity: 0.9;
+    transition:
+        opacity 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.guide-control:hover {
+    opacity: 1;
+    color: var(--guide-orange);
+    transform: translateY(-1px);
+}
+
+.guide-control:focus-visible {
+    outline: 2px solid var(--guide-orange);
+    outline-offset: 2px;
+}
+
+.guide-control svg {
+    display: block;
+}
+
+/* Compteur de pages, discret, posé en bas à gauche. */
+.guide-counter {
+    position: fixed;
+    bottom: 10px;
+    left: 16px;
+    z-index: 30;
+    margin: 0;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: rgba(20, 31, 69, 0.72);
+    backdrop-filter: blur(8px);
+    color: rgba(221, 229, 240, 0.85);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Plein écran natif : plus rien à masquer, on met juste de côté le compteur. */
+.is-fullscreen .guide-counter,
+.is-fullscreen .guide-controls {
+    display: none;
+}
+
+/* En plein écran les contrôles disparaissent : le lecteur reprend l'espace. */
+.is-fullscreen .guide-viewer {
+    padding: 20px 16px;
+}
+
+/* Croix de fermeture du plein écran, posée en haut à droite. */
+.guide-close {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 40;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 0;
+    background: transparent;
+    color: var(--guide-navy);
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 2px var(--guide-cream))
+        drop-shadow(0 0 4px var(--guide-cream))
+        drop-shadow(0 1px 6px rgba(6, 12, 33, 0.35));
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.guide-close:hover {
+    color: var(--guide-orange);
+    transform: translateY(-1px);
+}
+
+/* Lecteur de livret : il occupe toute la hauteur de la fenêtre, avec une
+ * marge symétrique minimale. Les contrôles flottants se posent par-dessus. */
+.guide-viewer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    height: 100%;
+    padding: 16px 12px;
+}
+
+.guide-nav {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--guide-navy);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.75;
+    filter: drop-shadow(0 0 2px var(--guide-cream))
+        drop-shadow(0 0 4px var(--guide-cream))
+        drop-shadow(0 1px 5px rgba(6, 12, 33, 0.3));
+    transition:
+        opacity 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.guide-nav:hover:not(:disabled) {
+    opacity: 1;
+    color: var(--guide-orange);
+    transform: translateY(-1px);
+}
+
+.guide-nav:disabled {
+    opacity: 0.22;
+    cursor: default;
+}
+
+/* La scène réserve la place de la page mise à l'échelle. */
+.guide-stage {
+    --page-scale: 1;
+    width: calc(794px * var(--page-scale));
+    height: calc(1123px * var(--page-scale));
+}
+
+.guide-book {
+    width: 794px;
+    height: 1123px;
+    transform: scale(var(--page-scale));
+    transform-origin: top left;
+}
+
+/* Feuilles A4 : ratio strict 1:1,414 (210 × 297 mm). */
+.sheet {
+    position: relative;
+    width: 794px;
+    height: 1123px;
+    padding: 44px 52px;
+    background: var(--guide-paper);
+    border-radius: 14px;
+    box-shadow: 0 24px 50px -30px rgba(6, 12, 33, 0.5);
+    font-size: 15px;
+    line-height: 1.62;
+    overflow: hidden;
+}
+
+.sheet__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--guide-orange);
+}
+
+.sheet__logo {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.sheet__title {
+    font-family: var(--font-brush, cursive);
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--guide-navy);
+    padding-top: 6px;
+}
+
+.sheet__title--spaced {
+    margin-top: 46px;
+}
+
+.sheet__lead {
+    margin-top: 16px;
+    color: rgba(27, 42, 91, 0.78);
+}
+
+.eyebrow {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--guide-bronze);
+}
+
+.block__title {
+    margin-top: 26px;
+    font-size: 15px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--guide-bronze);
+}
+
+/* Couverture illustrée : elle remplit toute la page A4. */
+.sheet--cover {
+    padding: 0;
+    background: var(--guide-navy);
+}
+
+/* Pages peu remplies : on étire les blocs pour occuper la page. */
+.sheet--spacious {
+    display: flex;
+    flex-direction: column;
+}
+
+.sheet--spacious .table {
+    margin-top: 26px;
+}
+
+.sheet--spacious .table th,
+.sheet--spacious .table td {
+    padding: 20px 14px;
+}
+
+.sheet--spacious .sheet__lead {
+    margin-top: 20px;
+}
+
+.cover__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.cover__veil {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(20, 31, 69, 0.72) 0%,
+        rgba(20, 31, 69, 0.45) 38%,
+        rgba(20, 31, 69, 0.85) 100%
+    );
+}
+
+.cover__content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    padding: 56px 56px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: var(--guide-cream);
+}
+
+.cover__kicker {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--guide-orange);
+}
+
+.cover__title {
+    margin-top: 10px;
+    font-family: var(--font-title, "Protest Revolution"), sans-serif;
+    font-size: clamp(44px, 8vw, 76px);
+    line-height: 0.98;
+    letter-spacing: 0.02em;
+    color: #fff;
+    text-shadow: 0 2px 0 rgba(20, 31, 69, 0.5);
+}
+
+.cover__edition {
+    margin-top: 16px;
+    font-family: var(--font-brush, cursive);
+    font-size: 24px;
+    color: var(--guide-orange);
+}
+
+.cover__date {
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--guide-ice, #dde5f0);
+}
+
+.cover__subtitle {
+    margin-top: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(248, 241, 227, 0.65);
+}
+
+.cover__intro {
+    margin-top: 18px;
+    max-width: 58ch;
+    font-size: 14px;
+    color: rgba(248, 241, 227, 0.85);
+}
+
+/* Programme */
+.day + .day {
+    margin-top: 44px;
+}
+
+.day__header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-top: 36px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(27, 42, 91, 0.14);
+}
+
+.day__header h3 {
+    font-family: var(--font-brush, cursive);
+    font-size: 29px;
+    color: var(--guide-ink);
+}
+
+.badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--guide-navy);
+    background: var(--guide-orange);
+    border-radius: 999px;
+    padding: 4px 12px;
+}
+
+.badge--sm {
+    font-size: 9px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.callout {
+    margin-top: 16px;
+    padding: 16px 18px;
+    border-radius: 10px;
+    background: var(--guide-navy);
+    color: #f1e9da;
+}
+
+.callout__title {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--guide-orange);
+    margin-bottom: 8px;
+}
+
+.callout ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.callout li {
+    margin-bottom: 3px;
+}
+
+.callout__note {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(232, 164, 92, 0.3);
+    font-size: 13px;
+    color: rgba(241, 233, 218, 0.8);
+}
+
+.schedule {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.schedule li {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 16px;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(27, 42, 91, 0.08);
+}
+
+.schedule__time {
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    color: var(--guide-ink);
+}
+
+.schedule__label em {
+    display: block;
+    font-size: 12.5px;
+    font-style: normal;
+    font-weight: 700;
+    color: var(--guide-bronze);
+}
+
+/* Tableaux */
+.table {
+    width: 100%;
+    margin-top: 18px;
+    border-collapse: collapse;
+}
+
+.table caption {
+    text-align: left;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--guide-bronze);
+    padding-bottom: 8px;
+}
+
+.table th,
+.table td {
+    text-align: left;
+    padding: 13px 14px;
+    border-bottom: 1px solid rgba(27, 42, 91, 0.12);
+}
+
+.table thead th {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(27, 42, 91, 0.6);
+    border-bottom: 2px solid rgba(27, 42, 91, 0.16);
+}
+
+.table tbody th {
+    font-weight: 700;
+}
+
+.table tbody td {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Listes */
+.checks,
+.age-list,
+.hotels,
+.contacts,
+.partners {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.checks li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 11px;
+}
+
+.checks li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--guide-orange);
+}
+
+.checks--tight li {
+    margin-bottom: 8px;
+}
+
+.age-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(27, 42, 91, 0.1);
+}
+
+.age-list li:first-child {
+    border-top: 1px solid rgba(27, 42, 91, 0.1);
+}
+
+.age-list__years {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--guide-bronze);
+}
+
+.note {
+    margin-top: 22px;
+    padding: 14px 18px;
+    border-left: 3px solid var(--guide-orange);
+    background: rgba(232, 164, 92, 0.1);
+    font-size: 13.5px;
+}
+
+.note p + p {
+    margin-top: 8px;
+}
+
+.link-line {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.link-line__url {
+    font-size: 12px;
+    color: rgba(27, 42, 91, 0.55);
+}
+
+/* Lieu et hôtels */
+.venue {
+    margin-top: 14px;
+    font-style: normal;
+}
+
+.venue strong {
+    display: block;
+    font-size: 17px;
+    font-weight: 900;
+    color: var(--guide-ink);
+}
+
+.hotels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.hotels li {
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(27, 42, 91, 0.12);
+    background: var(--guide-cream);
+}
+
+.hotels__name {
+    font-weight: 900;
+    color: var(--guide-ink);
+}
+
+.hotels__price {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--guide-bronze);
+    margin-top: 2px;
+}
+
+.hotels__address,
+.hotels__contact {
+    font-size: 12.5px;
+    margin-top: 6px;
+    color: rgba(27, 42, 91, 0.72);
+}
+
+.hotels__url {
+    word-break: break-all;
+}
+
+/* Services et artisans */
+.services {
+    margin: 16px 0 0;
+}
+
+.services > div {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(27, 42, 91, 0.1);
+}
+
+.services dt {
+    font-weight: 900;
+    color: var(--guide-ink);
+}
+
+.services dd {
+    margin: 2px 0 0;
+    color: rgba(27, 42, 91, 0.78);
+}
+
+/* Contacts */
+.contacts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 24px;
+}
+
+.contacts li {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.contacts a {
+    color: var(--guide-ink);
+    font-weight: 700;
+    text-decoration-color: var(--guide-orange);
+    text-underline-offset: 3px;
+}
+
+/* Partenaires */
+.partners {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.partners li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 96px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(27, 42, 91, 0.1);
+    background: #fff;
+}
+
+.partners img {
+    max-width: 100%;
+    max-height: 54px;
+    object-fit: contain;
+}
+
+.partners__name {
+    font-size: 10px;
+    text-align: center;
+    color: rgba(27, 42, 91, 0.6);
+}
+
+.colophon {
+    margin-top: 32px;
+    padding-top: 14px;
+    border-top: 2px solid var(--guide-orange);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(27, 42, 91, 0.6);
+}
+
+/* Bandeau de clôture, comme le livret papier. */
+.closing-banner {
+    margin-top: 30px;
+    padding: 16px 22px;
+    border-radius: 14px;
+    background: var(--guide-orange);
+    color: var(--guide-navy);
+    font-size: 16px;
+    font-weight: 900;
+    text-align: center;
+}
+
+@media (max-width: 700px) {
+    .guide-viewer {
+        gap: 8px;
+        padding: 20px 8px 32px;
+    }
+
+    .guide-nav {
+        width: 38px;
+        height: 38px;
+        font-size: 15px;
+    }
+
+    .schedule li {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+
+    .hotels,
+    .contacts,
+    .partners {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+ * Impression : toutes les pages A4 à la suite, sans le lecteur ni les
+ * contrôles. On neutralise la mise à l'échelle de l'écran et le `v-show`.
+ * ------------------------------------------------------------------------ */
+@page {
+    size: A4 portrait;
+    margin: 0;
+}
+
+@media print {
+    .guide-controls,
+    .guide-counter,
+    .guide-nav,
+    .guide-close {
+        display: none;
+    }
+
+    .guide-page {
+        background: #fff;
+        height: auto;
+        overflow: visible;
+    }
+
+    .guide-viewer {
+        display: block;
+        height: auto;
+        padding: 0;
+    }
+
+    .guide-stage {
+        width: auto;
+        height: auto;
+    }
+
+    .guide-book {
+        width: auto;
+        height: auto;
+        transform: none;
+    }
+
+    .sheet {
+        display: block !important;
+        width: 210mm;
+        height: 296mm;
+        padding: 14mm 12mm;
+        border-radius: 0;
+        box-shadow: none;
+        background: #fff;
+        font-size: 11pt;
+        break-after: page;
+        page-break-after: always;
+        overflow: hidden;
+    }
+
+    .sheet--cover {
+        padding: 0;
+        color: #fff;
+    }
+
+    .cover__content {
+        padding: 20mm 16mm;
+    }
+
+    .sheet:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .sheet__title {
+        font-size: 22pt;
+    }
+
+    .sheet__logo {
+        width: 44px;
+        height: 44px;
+    }
+
+    .closing-banner,
+    .cover__veil,
+    .cover__bg,
+    .hotels li,
+    .partners li,
+    .note,
+    .callout {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .closing-banner,
+    .hotels li,
+    .partners li,
+    .note,
+    .callout {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    a {
+        color: var(--guide-ink);
+        text-decoration: none;
+    }
+}

@@ -27,6 +27,7 @@
     "resolveComponent": "readonly",
     "usePlanCardPt": "readonly",
     "useCountdown": "readonly",
+    "useDisplayUrl": "readonly",
     "useSiteSeo": "readonly",
     "useRoute": "readonly",
     "nextTick": "readonly",
