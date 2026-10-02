@@ -82,16 +82,16 @@ export const SCHEDULE: ScheduleDay[] = [
         },
         events: [
             {
-                time: "9h30",
+                time: "9h00",
                 label: "Accueil & vérification des inscriptions",
                 emphasis: "key",
             },
-            { time: "11h – 13h", label: "Kihon", emphasis: "default" },
-            { time: "13h – 13h30", label: "Pause repas", emphasis: "muted" },
-            { time: "13h30 – 15h", label: "Kihon", emphasis: "default" },
-            { time: "15h – 16h", label: "Ji-geiko", emphasis: "default" },
+            { time: "10h – 12h", label: "Kihon", emphasis: "default" },
+            { time: "12h – 12h30", label: "Pause repas", emphasis: "muted" },
+            { time: "12h30 – 14h", label: "Kihon", emphasis: "default" },
+            { time: "14h – 15h", label: "Ji-geiko", emphasis: "default" },
             {
-                time: "16h30",
+                time: "16h",
                 label: "Passage de grades",
                 detail: "1er à 3ème dan",
                 emphasis: "key",
@@ -141,7 +141,7 @@ export const PARTNERS: Partner[] = [
     { file: "painpaill.png", name: "Au Pain Paillasse" },
     { file: "chaton.png", name: "Les Heures Qui Filent" },
     { file: "tatsei.png", name: "Tatsei" },
-    { file: "sunfuckingLove.png", name: "Sunflower Graphisme" },
+    { file: "sunfuckingLove.png", name: "SunfLover Graphisme" },
 ];
 
 export interface ContactChannel {
@@ -215,7 +215,7 @@ export const GUIDE_LINKS: Record<
 };
 
 /** Date limite des inscriptions, avant le passage de grade et la compétition. */
-export const REGISTRATION_DEADLINE = "13 novembre 2026";
+export const REGISTRATION_DEADLINE = "25 novembre 2026";
 
 /** Rappel tarifaire au-dessus des tableaux. */
 export const REGISTRATION_REMINDER =
