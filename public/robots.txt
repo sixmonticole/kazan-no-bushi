@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kazan-no-bushi.fr/sitemap.xml
+Sitemap: https://www.kazan-no-bushi.fr/sitemap.xml

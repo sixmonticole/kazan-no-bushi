@@ -2,7 +2,7 @@
 
 Site vitrine du stage de kendo **Kazan No Bushi**, les **28 et 29 novembre 2026** à l'**Artenium, Ceyrat** (63122).
 
-Stage, passage de grade et compétition — **[kazan-no-bushi.fr](https://kazan-no-bushi.fr)**.
+Stage, passage de grade et compétition — **[www.kazan-no-bushi.fr](https://www.kazan-no-bushi.fr)**.
 
 Site mono-page en français, généré en statique avec Nuxt 3.
 

@@ -5,7 +5,6 @@ const OG_HEIGHT = 630;
 
 /** Icônes, manifest et préconnexions aux polices. */
 const ICON_LINKS = [
-    { rel: "canonical", href: SITE_URL },
     { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
     { rel: "icon", type: "image/png", sizes: "192x192", href: "/icon-192.png" },
     { rel: "icon", type: "image/png", sizes: "512x512", href: "/icon-512.png" },
@@ -64,7 +63,7 @@ export function useSiteSeo(override: SiteSeoOverride = {}): void {
         meta: [{ name: "theme-color", content: "#141f45" }],
         link: [
             { rel: "canonical", href: canonical },
-            ...ICON_LINKS.slice(1),
+            ...ICON_LINKS,
             ...FONT_LINKS,
         ],
     });

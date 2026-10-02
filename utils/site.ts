@@ -1,4 +1,4 @@
-export const SITE_URL = "https://kazan-no-bushi.fr";
+export const SITE_URL = "https://www.kazan-no-bushi.fr";
 export const SITE_NAME = "Kazan No Bushi";
 export const EDITION = "XIVème édition";
 
