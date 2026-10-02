@@ -65,6 +65,45 @@ function onAnchorClick(event: MouseEvent): void {
     smoother?.scrollTo(target, true, "top top");
 }
 
+/**
+ * (Re)crée le ScrollSmoother quand les wrappers sont présents. On ne peut pas
+ * se contenter de `onMounted` : naviguer de `/guide` vers `/` remonte
+ * `#smooth-wrapper` sans réexécuter le hook (seul `NuxtPage` change), et le
+ * wrapper `position: fixed` resterait alors sans smoother, donc sans scroll.
+ */
+function setupSmoother(): void {
+    if (!smoothScroll.value || smoother) {
+        return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+    // Le DOM du `v-if` n'est pas encore peint : on attend le prochain tick.
+    nextTick(() => {
+        if (!smoothScroll.value || smoother) {
+            return;
+        }
+
+        smoother = ScrollSmoother.create({
+            wrapper: "#smooth-wrapper",
+            content: "#smooth-content",
+            smooth: 1.5,
+            effects: true,
+            normalizeScroll: false,
+        });
+
+        // Le décompte est monté en `ClientOnly` : sa hauteur définitive n'est
+        // connue qu'après coup, on rafraîchit les mesures de ScrollTrigger.
+        ScrollTrigger.refresh();
+    });
+}
+
+function teardownSmoother(): void {
+    smoother?.kill();
+    smoother = null;
+    ScrollTrigger.killAll();
+}
+
 onMounted(() => {
     const reduceMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
@@ -72,26 +111,25 @@ onMounted(() => {
 
     document.addEventListener("click", onAnchorClick);
 
-    if (!smoothScroll.value || reduceMotion) {
+    if (reduceMotion) {
         return;
     }
 
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+    setupSmoother();
 
-    smoother = ScrollSmoother.create({
-        wrapper: "#smooth-wrapper",
-        content: "#smooth-content",
-        smooth: 1.5,
-        effects: true,
-        normalizeScroll: false,
+    // Les wrappers sont montés/démontés par navigation (`/` ⇄ `/guide`).
+    watch(smoothScroll, (active) => {
+        if (active) {
+            setupSmoother();
+        } else {
+            teardownSmoother();
+        }
     });
 });
 
 onBeforeUnmount(() => {
     document.removeEventListener("click", onAnchorClick);
-    smoother?.kill();
-    smoother = null;
-    ScrollTrigger.killAll();
+    teardownSmoother();
 });
 </script>
 
