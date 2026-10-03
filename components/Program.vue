@@ -114,6 +114,24 @@ function titleClass(emphasis: Emphasis): string {
                         </p>
                     </div>
 
+                    <div
+                        v-if="day.warning"
+                        class="relative mb-9 flex items-start gap-3.5 rounded-2xl border border-plan-orange-400/45 bg-plan-orange-400/[0.12] px-5 py-4"
+                        role="note"
+                    >
+                        <span
+                            class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-plan-orange-400 text-sm font-black text-plan-navy-900"
+                            aria-hidden="true"
+                        >
+                            !
+                        </span>
+                        <p
+                            class="text-[15px] leading-[1.55] font-medium text-plan-navy-700"
+                        >
+                            {{ day.warning }}
+                        </p>
+                    </div>
+
                     <ol
                         class="relative grid grid-cols-[76px_22px_1fr] sm:grid-cols-[120px_26px_1fr] list-none p-0 m-0"
                     >

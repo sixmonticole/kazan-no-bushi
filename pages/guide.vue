@@ -25,6 +25,7 @@ const programme: ScheduleDay[] = SCHEDULE.map((day) => ({
     label: day.label,
     badge: day.badge,
     callout: day.callout,
+    warning: day.warning,
     events: day.events.map((event) => ({
         time: event.time,
         label: event.label,

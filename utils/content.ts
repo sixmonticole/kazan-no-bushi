@@ -65,6 +65,7 @@ export interface ScheduleDay {
     label: string;
     badge: string;
     callout: { title: string; items: CalloutItem[]; note?: string } | null;
+    warning?: string;
     events: ScheduleEvent[];
     incomplete?: boolean;
 }
@@ -80,6 +81,8 @@ export const SCHEDULE: ScheduleDay[] = [
                 { label: "Jeunes — ", name: "Marc RAGONA" },
             ],
         },
+        warning:
+            "La pause repas du samedi est courte : 30 minutes seulement. La buvette ouvre dès le matin, pour que chacun puisse prendre à manger avant midi et éviter l'attente à l'heure du repas.",
         events: [
             {
                 time: "9h00",
@@ -111,6 +114,7 @@ export const SCHEDULE: ScheduleDay[] = [
             note: "Contrôle des passeports et des shinaïs pour tous les compétiteurs.",
         },
         events: [
+            { time: "8h00", label: "Ouverture des portes", emphasis: "key" },
             { time: "9h30", label: "Début des compétitions", emphasis: "key" },
         ],
         incomplete: true,
@@ -217,6 +221,13 @@ export const GUIDE_LINKS: Record<
 /** Date limite des inscriptions, avant le passage de grade et la compétition. */
 export const REGISTRATION_DEADLINE = "25 novembre 2026";
 
+/**
+ * Démarche pour payer en espèces sur place : la demande se fait par e-mail
+ * avant de remplir le formulaire HelloAsso. Le club garde ainsi la trace des
+ * paiements à encaisser sur place.
+ */
+export const ONSITE_PAYMENT_NOTE = `Vous préférez payer en espèces sur place ? Écrivez-nous d'abord à ${CONTACT_EMAIL} avant le ${REGISTRATION_DEADLINE} : nous vous renvoyons un code de paiement sur place. Vous remplissez alors le formulaire HelloAsso avec ce code, puis vous réglez en espèces à votre arrivée. Le club dispose ainsi de la liste des personnes à encaisser sur place.`;
+
 /** Rappel tarifaire au-dessus des tableaux. */
 export const REGISTRATION_REMINDER =
     "Nous vous demandons de remplir un formulaire et de faire un paiement pour chaque participant individuellement.";
@@ -252,7 +263,7 @@ export const REGISTRATION_REQUIREMENTS = [
     "Licence en cours de validité et certificat médical portant la mention « compétition » pour participer aux compétitions.",
     "Autorisation parentale pour les mineurs.",
     "Certificat de surclassement de moins de 3 mois pour les juniors engagés en catégorie adulte (équipe femme ou équipe mixte).",
-    "Frais d'inscription au passage de grade à régler en ligne sur HelloAsso. Aucune inscription ne sera prise le jour même, sur place.",
+    "Frais d'inscription à régler en ligne sur HelloAsso, ou en espèces sur place avec un code de paiement (voir ci-dessous). Aucune inscription ne sera prise le jour même sans être passée par HelloAsso.",
     "Frais de validation du grade, dus en cas de réussite, à régler en espèces sur place.",
 ];
 
