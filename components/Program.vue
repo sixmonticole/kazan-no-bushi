@@ -74,7 +74,7 @@ function titleClass(emphasis: Emphasis): string {
                 </div>
 
                 <div
-                    class="relative rounded-[22px] bg-plan-cream-100 px-6 py-9 sm:px-10 sm:py-10 shadow-[0_26px_60px_-24px_rgba(6,12,33,0.7)] overflow-hidden"
+                    class="relative rounded-[22px] bg-plan-cream-100 px-6 py-9 sm:px-10 sm:py-10 shadow-card overflow-hidden"
                     data-lag="0.12"
                 >
                     <div

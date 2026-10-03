@@ -5,7 +5,7 @@ const { days, hours, minutes, seconds, isOver, target } = useCountdown();
 
 const cardPt: CardPassThroughOptions = {
     root: {
-        class: "!bg-plan-cream-100 !border-0 rounded-[14px] shadow-[0_18px_40px_-22px_rgba(6,12,33,0.8)]",
+        class: "!bg-plan-cream-100 !border-0 !rounded-[14px] !shadow-card-sm",
     },
     body: { class: "!py-4 !px-2.5" },
 };

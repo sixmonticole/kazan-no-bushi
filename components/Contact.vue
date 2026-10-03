@@ -14,7 +14,7 @@ import { EDITION_YEAR, SITE_NAME } from "~/utils/site";
                     :href="channel.href"
                     :target="channel.external ? '_blank' : undefined"
                     :rel="channel.external ? 'noopener noreferrer' : undefined"
-                    class="h-full rounded-[18px] bg-plan-cream-100 shadow-[0_24px_54px_-26px_rgba(6,12,33,0.75)] px-6 py-7 flex flex-col items-center gap-3 hover:-translate-y-0.5 transition-transform focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plan-orange-300"
+                    class="h-full rounded-[18px] bg-plan-cream-100 shadow-card px-6 py-7 flex flex-col items-center gap-3 hover:-translate-y-0.5 transition-transform focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plan-orange-300"
                     data-lag="0.15"
                 >
                     <span

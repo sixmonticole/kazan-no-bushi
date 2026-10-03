@@ -97,7 +97,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="event-map" :style="{ height }">
+    <div
+        class="event-map print:break-inside-avoid print:[print-color-adjust:exact]"
+        :style="{ height }"
+    >
         <!-- Repli statique : visible à l'écran avant Leaflet, et toujours en print. -->
         <img
             src="/plan-artenium.png"

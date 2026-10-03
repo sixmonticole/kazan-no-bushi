@@ -14,39 +14,63 @@
     --color-plan-orange-400: #e8a45c;
     --color-plan-orange-300: #f3c089;
     --color-plan-bronze-600: #a8702c;
+    /* Fond des feuilles du livret imprimé, légèrement plus clair que le crème. */
+    --color-plan-paper: #fffdf8;
 }
 
-@layer components {
-    /* Voile navy posé sur les photos de section, avec fondu haut et bas
-       vers la couleur de fond. L'opacité centrale est réglable par section. */
-    .section-veil {
-        background: linear-gradient(
-            180deg,
-            var(--color-plan-navy-900) 0%,
-            rgba(20, 31, 69, var(--veil-opacity, 0.72)) 22%,
-            rgba(20, 31, 69, var(--veil-opacity, 0.72)) 78%,
-            var(--color-plan-navy-900) 100%
-        );
-    }
+/*
+ * Utilitaires partagés. Ils suivent la syntaxe Tailwind 4 (`@utility`) pour
+ * entrer dans le vocabulaire du framework : ils s'utilisent comme n'importe
+ * quelle classe utilitaire, se composent avec les variantes (`sm:`, `hover:`,
+ * `print:`) et se limitent volontairement aux motifs réellement réutilisés.
+ */
 
-    /* Halo orange en haut de section, posé sur le navy. */
-    .section-halo {
-        background-image: radial-gradient(
-            var(--halo-size, 120% 80%) at 50% -10%,
-            rgba(232, 164, 92, var(--halo-opacity, 0.34)) 0%,
-            rgba(232, 164, 92, calc(var(--halo-opacity, 0.34) * 0.2)) 44%,
-            transparent 72%
-        );
-        background-repeat: no-repeat;
-        background-position: top center;
-    }
+/* Voile navy posé sur les photos de section, avec fondu haut et bas vers la
+   couleur de fond. L'opacité centrale est réglable par section via
+   `--veil-opacity`. */
+@utility section-veil {
+    background: linear-gradient(
+        180deg,
+        var(--color-plan-navy-900) 0%,
+        rgba(20, 31, 69, var(--veil-opacity, 0.72)) 22%,
+        rgba(20, 31, 69, var(--veil-opacity, 0.72)) 78%,
+        var(--color-plan-navy-900) 100%
+    );
+}
 
-    /* Trait vertical dégradé sous le lien « Découvrir » du hero. */
-    .hero-scroll-line {
-        background: linear-gradient(
-            180deg,
-            rgba(232, 164, 92, 0.8),
-            transparent
-        );
-    }
+/* Halo orange en haut de section, posé sur le navy. `--halo-size` et
+   `--halo-opacity` règlent son étendue et son intensité. */
+@utility section-halo {
+    background-image: radial-gradient(
+        var(--halo-size, 120% 80%) at 50% -10%,
+        rgba(232, 164, 92, var(--halo-opacity, 0.34)) 0%,
+        rgba(232, 164, 92, calc(var(--halo-opacity, 0.34) * 0.2)) 44%,
+        transparent 72%
+    );
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+/* Trait vertical dégradé sous le lien « Découvrir » du hero. */
+@utility hero-scroll-line {
+    background: linear-gradient(180deg, rgba(232, 164, 92, 0.8), transparent);
+}
+
+/*
+ * Ombre portée des cartes crème posées sur les fonds navy. Volontairement
+ * partagée entre la page d'accueil et le livret : une carte « en relief »
+ * garde la même profondeur partout.
+ */
+@utility shadow-card {
+    box-shadow: 0 24px 54px -26px rgba(6, 12, 33, 0.75);
+}
+
+/* Variante plus discrète, réservée aux vignettes de la page d'accueil. */
+@utility shadow-card-sm {
+    box-shadow: 0 18px 40px -22px rgba(6, 12, 33, 0.8);
+}
+
+/* Ombre des feuilles A4 du livret, posées sur le fond crème. */
+@utility shadow-sheet {
+    box-shadow: 0 24px 50px -30px rgba(6, 12, 33, 0.5);
 }

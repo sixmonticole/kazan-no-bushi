@@ -7,46 +7,55 @@ defineProps<{
 }>();
 
 const displayUrl = useDisplayUrl();
+
+const VENUE_NOTES = [
+    "Parking gratuit à l'entrée de l'Arténium.",
+    "Gymnase adapté avec un accès handicapé.",
+];
 </script>
 
 <template>
-    <section class="sheet">
-        <GuideSheetHeader title="Le lieu" />
-        <address class="venue">
-            <strong>{{ EVENT.address.name }}</strong>
+    <GuideSheet title="Le lieu">
+        <address class="mt-3.5 not-italic">
+            <strong class="block text-[17px] font-black text-plan-navy-700">
+                {{ EVENT.address.name }}
+            </strong>
             {{ EVENT.address.street }}<br />
             {{ EVENT.address.postalCode }} {{ EVENT.address.city }}
         </address>
-        <ul class="checks checks--tight">
-            <li>Parking gratuit à l'entrée de l'Arténium.</li>
-            <li>Gymnase adapté avec un accès handicapé.</li>
-        </ul>
+        <GuideChecks :items="VENUE_NOTES" tight />
 
-        <EventMap class="venue__map" height="230px" :zoom="15" />
+        <EventMap class="mt-4.5" height="230px" :zoom="15" />
 
-        <h2 class="sheet__title sheet__title--spaced">Hébergement</h2>
-        <p class="sheet__lead">
+        <GuideSubtitle label="Hébergement" />
+        <p class="mt-4 text-plan-navy-700/78">
             Prix indicatifs, à confirmer auprès des établissements. L'hôtel de
             L'Artière est le plus proche du gymnase.
         </p>
 
-        <ul class="hotels">
-            <li v-for="hotel in hotels" :key="hotel.name">
-                <p class="hotels__name">
+        <ul class="mt-3 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2">
+            <li
+                v-for="hotel in hotels"
+                :key="hotel.name"
+                class="rounded-[10px] border border-plan-navy-700/[0.12] bg-plan-cream-100 px-4 py-3.5 print:break-inside-avoid print:[print-color-adjust:exact]"
+            >
+                <p class="font-black text-plan-navy-700">
                     {{ hotel.name }}
-                    <span v-if="hotel.closest" class="badge badge--sm">
+                    <GuideBadge v-if="hotel.closest" size="sm" class="ml-2">
                         Le plus proche
-                    </span>
+                    </GuideBadge>
                 </p>
-                <p class="hotels__price">{{ hotel.price }}</p>
-                <p class="hotels__address">{{ hotel.address }}</p>
-                <p class="hotels__contact">
+                <p class="mt-0.5 text-[12.5px] font-bold text-plan-bronze-600">
+                    {{ hotel.price }}
+                </p>
+                <p class="mt-1.5 text-[12.5px] text-plan-navy-700/72">
+                    {{ hotel.address }}
+                </p>
+                <p class="mt-1.5 text-[12.5px] text-plan-navy-700/72">
                     {{ hotel.phone }} &middot;
-                    <span class="hotels__url">
-                        {{ displayUrl(hotel.url) }}
-                    </span>
+                    <span class="break-all">{{ displayUrl(hotel.url) }}</span>
                 </p>
             </li>
         </ul>
-    </section>
+    </GuideSheet>
 </template>

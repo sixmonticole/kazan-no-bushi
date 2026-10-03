@@ -3,7 +3,7 @@ import type { ContactChannel } from "~/utils/content";
 import { CONTACT_CHANNELS, GUIDE_LINKS } from "~/utils/content";
 import { CONTACT_EMAIL } from "~/utils/site";
 
-defineProps<{
+const props = defineProps<{
     services: { title: string; description: string }[];
     shops: { name: string; description: string }[];
 }>();
@@ -16,51 +16,52 @@ const CHANNEL_LABELS: Record<ContactChannel["type"], string> = {
     instagram: "Instagram",
     facebook: "Facebook",
 };
+
+const serviceItems = computed(() =>
+    props.services.map((service) => ({
+        term: service.title,
+        description: service.description,
+    })),
+);
+
+const shopItems = computed(() =>
+    props.shops.map((shop) => ({
+        term: shop.name,
+        description: shop.description,
+    })),
+);
 </script>
 
 <template>
-    <section class="sheet">
-        <GuideSheetHeader title="Sur place" />
-        <dl class="services">
-            <div v-for="service in services" :key="service.title">
-                <dt>{{ service.title }}</dt>
-                <dd>{{ service.description }}</dd>
-            </div>
-        </dl>
+    <GuideSheet title="Sur place">
+        <GuideDefinitionList :items="serviceItems" />
 
-        <h2 class="sheet__title sheet__title--spaced">Artisans et boutiques</h2>
-        <dl class="services">
-            <div v-for="shop in shops" :key="shop.name">
-                <dt>{{ shop.name }}</dt>
-                <dd>{{ shop.description }}</dd>
-            </div>
-        </dl>
+        <GuideSubtitle label="Artisans et boutiques" />
+        <GuideDefinitionList :items="shopItems" />
 
-        <h2 class="sheet__title sheet__title--spaced">Nous contacter</h2>
-        <ul class="contacts">
-            <li>
-                <span class="eyebrow">Par e-mail</span>
-                <a :href="`mailto:${CONTACT_EMAIL}`">{{ CONTACT_EMAIL }}</a>
-            </li>
-            <li
+        <GuideSubtitle label="Nous contacter" />
+        <ul
+            class="mt-3.5 grid list-none grid-cols-1 gap-x-6 gap-y-3.5 p-0 sm:grid-cols-2"
+        >
+            <GuideLinkLine
+                label="Par e-mail"
+                :href="`mailto:${CONTACT_EMAIL}`"
+                :link="CONTACT_EMAIL"
+            />
+            <GuideLinkLine
                 v-for="channel in CONTACT_CHANNELS.slice(1)"
                 :key="channel.type"
-            >
-                <span class="eyebrow">{{ CHANNEL_LABELS[channel.type] }}</span>
-                <a :href="channel.href">{{ channel.label }}</a>
-                <span class="link-line__url">
-                    {{ displayUrl(channel.href) }}
-                </span>
-            </li>
-            <li>
-                <span class="eyebrow">Inscriptions</span>
-                <a :href="GUIDE_LINKS.registration.href">
-                    {{ GUIDE_LINKS.registration.label }}
-                </a>
-                <span class="link-line__url">
-                    {{ displayUrl(GUIDE_LINKS.registration.href) }}
-                </span>
-            </li>
+                :label="CHANNEL_LABELS[channel.type]"
+                :href="channel.href"
+                :link="channel.label"
+                :url="displayUrl(channel.href)"
+            />
+            <GuideLinkLine
+                label="Inscriptions"
+                :href="GUIDE_LINKS.registration.href"
+                :link="GUIDE_LINKS.registration.label"
+                :url="displayUrl(GUIDE_LINKS.registration.href)"
+            />
         </ul>
-    </section>
+    </GuideSheet>
 </template>

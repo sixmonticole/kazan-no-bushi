@@ -149,13 +149,16 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="guide-page" :class="{ 'is-fullscreen': isFullscreen }">
+    <div
+        class="guide-page h-screen overflow-hidden bg-plan-cream-100 font-zen text-plan-navy-700"
+        :class="{ 'is-fullscreen': isFullscreen }"
+    >
         <!--
             Contrôles flottants et transparents, posés au-dessus du livret :
             retour à gauche, PDF et plein écran à droite, en icônes seules.
             Invisibles à l'impression.
         -->
-        <div class="guide-controls guide-controls--left">
+        <div class="guide-controls left-4">
             <NuxtLink
                 to="/"
                 class="guide-control"
@@ -180,7 +183,7 @@ onBeforeUnmount(() => {
             </NuxtLink>
         </div>
 
-        <div class="guide-controls guide-controls--right">
+        <div class="guide-controls right-4">
             <a
                 class="guide-control"
                 :href="PDF_URL"
@@ -245,10 +248,12 @@ onBeforeUnmount(() => {
             &#10005;
         </button>
 
-        <div class="guide-viewer">
+        <div
+            class="guide-viewer flex h-full items-center justify-center gap-4 p-4 max-sm:gap-2 max-sm:px-2 max-sm:pt-5 max-sm:pb-8"
+        >
             <button
                 type="button"
-                class="guide-nav guide-nav--prev"
+                class="guide-nav"
                 :disabled="currentPage === 1"
                 aria-label="Page précédente"
                 @click="previousPage"
@@ -291,7 +296,7 @@ onBeforeUnmount(() => {
 
             <button
                 type="button"
-                class="guide-nav guide-nav--next"
+                class="guide-nav"
                 :disabled="currentPage === TOTAL_PAGES"
                 aria-label="Page suivante"
                 @click="nextPage"
@@ -302,4 +307,248 @@ onBeforeUnmount(() => {
     </div>
 </template>
 
-<style src="../app/assets/css/guide.css"></style>
+<style scoped>
+/*
+ * Le lecteur du livret reste du CSS local : ses boutons circulaires, leurs
+ * halos (drop-shadow crème) et la mise à l'échelle A4 n'ont pas d'équivalent
+ * utilitaire raisonnable. Tout ce qui peut l'être passe par Tailwind dans le
+ * template.
+ */
+
+/* Contrôles flottants : icônes transparentes posées au-dessus du livret. */
+.guide-controls {
+    position: fixed;
+    top: 16px;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.guide-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    /* Icône indigo : lisible sur le fond crème du lecteur, et sur un fond
+     * sombre grâce au halo crème qui la détache. */
+    color: var(--color-plan-navy-700);
+    cursor: pointer;
+    text-decoration: none;
+    filter: drop-shadow(0 0 2px var(--color-plan-cream-100))
+        drop-shadow(0 0 4px var(--color-plan-cream-100))
+        drop-shadow(0 1px 6px rgba(6, 12, 33, 0.35));
+    opacity: 0.9;
+    transition:
+        opacity 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.guide-control:hover {
+    opacity: 1;
+    color: var(--color-plan-orange-400);
+    transform: translateY(-1px);
+}
+
+.guide-control:focus-visible {
+    outline: 2px solid var(--color-plan-orange-400);
+    outline-offset: 2px;
+}
+
+.guide-control svg {
+    display: block;
+}
+
+/* Compteur de pages, discret, posé en bas à gauche. */
+.guide-counter {
+    position: fixed;
+    bottom: 10px;
+    left: 16px;
+    z-index: 30;
+    margin: 0;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: rgba(20, 31, 69, 0.72);
+    backdrop-filter: blur(8px);
+    color: rgba(221, 229, 240, 0.85);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Plein écran natif : plus rien à masquer, on met juste de côté le compteur. */
+.is-fullscreen .guide-counter,
+.is-fullscreen .guide-controls {
+    display: none;
+}
+
+/* En plein écran les contrôles disparaissent : le lecteur reprend l'espace. */
+.is-fullscreen .guide-viewer {
+    padding: 20px 16px;
+}
+
+/* Croix de fermeture du plein écran, posée en haut à droite. */
+.guide-close {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 40;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 0;
+    background: transparent;
+    color: var(--color-plan-navy-700);
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 2px var(--color-plan-cream-100))
+        drop-shadow(0 0 4px var(--color-plan-cream-100))
+        drop-shadow(0 1px 6px rgba(6, 12, 33, 0.35));
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.guide-close:hover {
+    color: var(--color-plan-orange-400);
+    transform: translateY(-1px);
+}
+
+/* Boutons de pagination, de part et d'autre de la page. */
+.guide-nav {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--color-plan-navy-700);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.75;
+    filter: drop-shadow(0 0 2px var(--color-plan-cream-100))
+        drop-shadow(0 0 4px var(--color-plan-cream-100))
+        drop-shadow(0 1px 5px rgba(6, 12, 33, 0.3));
+    transition:
+        opacity 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.guide-nav:hover:not(:disabled) {
+    opacity: 1;
+    color: var(--color-plan-orange-400);
+    transform: translateY(-1px);
+}
+
+.guide-nav:disabled {
+    opacity: 0.22;
+    cursor: default;
+}
+
+@media (max-width: 700px) {
+    .guide-nav {
+        width: 38px;
+        height: 38px;
+        font-size: 15px;
+    }
+}
+
+/* La scène réserve la place de la page mise à l'échelle. */
+.guide-stage {
+    --page-scale: 1;
+    width: calc(794px * var(--page-scale));
+    height: calc(1123px * var(--page-scale));
+}
+
+.guide-book {
+    width: 794px;
+    height: 1123px;
+    transform: scale(var(--page-scale));
+    transform-origin: top left;
+}
+
+/* ---------------------------------------------------------------------------
+ * Impression : toutes les pages A4 à la suite, sans le lecteur ni les
+ * contrôles. On neutralise la mise à l'échelle de l'écran et le `v-show`.
+ * ------------------------------------------------------------------------ */
+@page {
+    size: A4 portrait;
+    margin: 0;
+}
+
+@media print {
+    .guide-controls,
+    .guide-counter,
+    .guide-nav,
+    .guide-close {
+        display: none;
+    }
+
+    .guide-page {
+        background: #fff;
+        height: auto;
+        overflow: visible;
+    }
+
+    .guide-viewer {
+        display: block;
+        height: auto;
+        padding: 0;
+    }
+
+    .guide-stage {
+        width: auto;
+        height: auto;
+    }
+
+    .guide-book {
+        width: auto;
+        height: auto;
+        transform: none;
+    }
+
+    .guide-stage :deep(.sheet) {
+        display: block !important;
+        width: 210mm;
+        height: 296mm;
+        padding: 14mm 12mm;
+        border-radius: 0;
+        box-shadow: none;
+        background: #fff;
+        font-size: 11pt;
+        break-after: page;
+        page-break-after: always;
+        overflow: hidden;
+    }
+
+    .guide-stage :deep(.sheet--cover) {
+        padding: 0;
+        color: #fff;
+    }
+
+    .guide-stage :deep(.sheet:last-child) {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    /* Les liens deviennent de simple texte encré sur le papier. */
+    .guide-stage :deep(a) {
+        color: var(--color-plan-navy-700);
+        text-decoration: none;
+    }
+}
+</style>

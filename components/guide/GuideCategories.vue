@@ -2,41 +2,40 @@
 import type { AgeCategory, TeamCategory } from "~/utils/content";
 import { COMPETITION_NOTES } from "~/utils/content";
 
-defineProps<{
+const props = defineProps<{
     ages: AgeCategory[];
     teams: TeamCategory[];
 }>();
+
+const ageRows = computed(() =>
+    props.ages.map((category) => ({
+        label: category.name,
+        value: category.years,
+    })),
+);
+
+const teamRows = computed(() =>
+    props.teams.map((category) => ({
+        label: category.name,
+        value: category.details,
+    })),
+);
 </script>
 
 <template>
-    <section class="sheet">
-        <GuideSheetHeader title="Catégories de la compétition" />
-        <p class="sheet__lead">
+    <GuideSheet title="Catégories de la compétition">
+        <p class="mt-4 text-plan-navy-700/78">
             Les catégories individuelles sont déterminées par l'année de
             naissance. Un certificat de surclassement de moins de 3 mois est
             exigé pour les juniors engagés en catégorie adulte.
         </p>
 
-        <h3 class="block__title">Individuels</h3>
-        <ul class="age-list">
-            <li v-for="category in ages" :key="category.name">
-                <span>{{ category.name }}</span>
-                <span class="age-list__years">{{ category.years }}</span>
-            </li>
-        </ul>
+        <GuideBlockTitle label="Individuels" />
+        <GuideValueList :items="ageRows" />
 
-        <h3 class="block__title">Équipes</h3>
-        <ul class="age-list">
-            <li v-for="category in teams" :key="category.name">
-                <span>{{ category.name }}</span>
-                <span class="age-list__years">{{ category.details }}</span>
-            </li>
-        </ul>
+        <GuideBlockTitle label="Équipes" />
+        <GuideValueList :items="teamRows" />
 
-        <ul class="checks checks--tight">
-            <li v-for="item in COMPETITION_NOTES" :key="item">
-                {{ item }}
-            </li>
-        </ul>
-    </section>
+        <GuideChecks :items="COMPETITION_NOTES" tight />
+    </GuideSheet>
 </template>
