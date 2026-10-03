@@ -78,21 +78,18 @@ function toPx(value: string): number {
  */
 function fitToViewport(): void {
     const viewer = document.querySelector(".guide-viewer");
-    const navWidth = 80;
 
     let verticalPadding = 32;
-    let availableWidth = window.innerWidth - navWidth - 24;
+    let horizontalPadding = 24;
 
     if (viewer) {
         const styles = window.getComputedStyle(viewer);
-        const padTop = toPx(styles.paddingTop);
-        const padBottom = toPx(styles.paddingBottom);
-        const padLeft = toPx(styles.paddingLeft);
-        const padRight = toPx(styles.paddingRight);
-        verticalPadding = padTop + padBottom;
-        availableWidth = window.innerWidth - navWidth - (padLeft + padRight);
+        verticalPadding = toPx(styles.paddingTop) + toPx(styles.paddingBottom);
+        horizontalPadding =
+            toPx(styles.paddingLeft) + toPx(styles.paddingRight);
     }
 
+    const availableWidth = window.innerWidth - horizontalPadding;
     const availableHeight = window.innerHeight - verticalPadding;
 
     pageScale.value = Math.min(
@@ -120,6 +117,57 @@ function onFullscreenChange(): void {
     nextTick(fitToViewport);
 }
 
+/** Glissement du doigt : on tourne la page au-delà d'un seuil horizontal. */
+const SWIPE_THRESHOLD_PX = 48;
+
+let touchStartX = 0;
+let touchStartY = 0;
+let isSwiping = false;
+
+function onTouchStart(event: TouchEvent): void {
+    const touch = event.changedTouches[0];
+
+    if (!touch) {
+        return;
+    }
+
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    isSwiping = true;
+}
+
+function onTouchEnd(event: TouchEvent): void {
+    if (!isSwiping) {
+        return;
+    }
+
+    isSwiping = false;
+
+    const touch = event.changedTouches[0];
+
+    if (!touch) {
+        return;
+    }
+
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+
+    // Un geste surtout vertical (défilement) ne tourne pas la page.
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD_PX) {
+        return;
+    }
+
+    if (Math.abs(deltaX) < Math.abs(deltaY)) {
+        return;
+    }
+
+    if (deltaX < 0) {
+        nextPage();
+    } else {
+        previousPage();
+    }
+}
+
 function onKeydown(event: KeyboardEvent): void {
     if (event.key === "ArrowRight") {
         nextPage();
@@ -139,12 +187,16 @@ onMounted(() => {
     window.requestAnimationFrame(fitToViewport);
     window.addEventListener("resize", fitToViewport);
     window.addEventListener("keydown", onKeydown);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
     document.addEventListener("fullscreenchange", onFullscreenChange);
 });
 
 onBeforeUnmount(() => {
     window.removeEventListener("resize", fitToViewport);
     window.removeEventListener("keydown", onKeydown);
+    window.removeEventListener("touchstart", onTouchStart);
+    window.removeEventListener("touchend", onTouchEnd);
     document.removeEventListener("fullscreenchange", onFullscreenChange);
 });
 </script>
@@ -250,18 +302,8 @@ onBeforeUnmount(() => {
         </button>
 
         <div
-            class="guide-viewer flex h-full items-center justify-center gap-4 p-4 max-sm:gap-2 max-sm:px-2 max-sm:pt-5 max-sm:pb-8"
+            class="guide-viewer flex h-full items-center justify-center p-4 max-sm:px-2 max-sm:pt-5 max-sm:pb-8"
         >
-            <button
-                type="button"
-                class="guide-nav"
-                :disabled="currentPage === 1"
-                aria-label="Page précédente"
-                @click="previousPage"
-            >
-                &#8592;
-            </button>
-
             <div class="guide-stage" :style="{ '--page-scale': pageScale }">
                 <div class="guide-book">
                     <GuideCover v-show="currentPage === 1" />
@@ -297,7 +339,17 @@ onBeforeUnmount(() => {
 
             <button
                 type="button"
-                class="guide-nav"
+                class="guide-nav guide-nav--prev"
+                :disabled="currentPage === 1"
+                aria-label="Page précédente"
+                @click="previousPage"
+            >
+                &#8592;
+            </button>
+
+            <button
+                type="button"
+                class="guide-nav guide-nav--next"
                 :disabled="currentPage === TOTAL_PAGES"
                 aria-label="Page suivante"
                 @click="nextPage"
@@ -319,19 +371,19 @@ onBeforeUnmount(() => {
 /* Contrôles flottants : icônes transparentes posées au-dessus du livret. */
 .guide-controls {
     position: fixed;
-    top: 16px;
+    top: 10px;
     z-index: 30;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 2px;
 }
 
 .guide-control {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     padding: 0;
     border: 0;
     border-radius: 50%;
@@ -344,14 +396,15 @@ onBeforeUnmount(() => {
     filter: drop-shadow(0 0 2px var(--color-plan-cream-100))
         drop-shadow(0 0 4px var(--color-plan-cream-100))
         drop-shadow(0 1px 6px rgba(6, 12, 33, 0.35));
-    opacity: 0.9;
+    opacity: 0.55;
     transition:
         opacity 0.2s ease,
         color 0.2s ease,
         transform 0.2s ease;
 }
 
-.guide-control:hover {
+.guide-control:hover,
+.guide-control:focus-visible {
     opacity: 1;
     color: var(--color-plan-orange-400);
     transform: translateY(-1px);
@@ -427,48 +480,100 @@ onBeforeUnmount(() => {
     transform: translateY(-1px);
 }
 
-/* Boutons de pagination, de part et d'autre de la page. */
+/* Boutons de pagination, superposés aux bords de la page, centrés verticalement. */
 .guide-nav {
-    flex-shrink: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 46px;
     height: 46px;
     border: 0;
     border-radius: 50%;
-    background: transparent;
-    color: var(--color-plan-navy-700);
+    background: rgba(20, 31, 69, 0.55);
+    backdrop-filter: blur(6px);
+    color: var(--color-plan-cream-100);
     font-size: 18px;
     line-height: 1;
     cursor: pointer;
-    opacity: 0.75;
-    filter: drop-shadow(0 0 2px var(--color-plan-cream-100))
-        drop-shadow(0 0 4px var(--color-plan-cream-100))
-        drop-shadow(0 1px 5px rgba(6, 12, 33, 0.3));
+    opacity: 0.9;
     transition:
         opacity 0.2s ease,
         color 0.2s ease,
+        background 0.2s ease,
         transform 0.2s ease;
+}
+
+.guide-nav--prev {
+    left: 10px;
+}
+
+.guide-nav--next {
+    right: 10px;
 }
 
 .guide-nav:hover:not(:disabled) {
     opacity: 1;
     color: var(--color-plan-orange-400);
-    transform: translateY(-1px);
+    background: rgba(20, 31, 69, 0.75);
+    transform: translateY(-50%) scale(1.06);
 }
 
 .guide-nav:disabled {
-    opacity: 0.22;
+    opacity: 0.35;
     cursor: default;
 }
 
 @media (max-width: 700px) {
     .guide-nav {
-        width: 38px;
-        height: 38px;
-        font-size: 15px;
+        width: 34px;
+        height: 34px;
+        font-size: 14px;
+        background: rgba(20, 31, 69, 0.42);
+        opacity: 0.8;
+    }
+
+    .guide-nav--prev {
+        left: 2px;
+    }
+
+    .guide-nav--next {
+        right: 2px;
+    }
+}
+
+/*
+ * Écrans très étroits : la feuille occupe toute la largeur, les flèches ne
+ * peuvent que flotter par-dessus. On les réduit encore et on les rend très
+ * discrètes pour laisser lire le contenu qu'elles recouvrent.
+ */
+@media (max-width: 420px) {
+    .guide-nav {
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+        background: rgba(20, 31, 69, 0.32);
+        opacity: 0.7;
+        backdrop-filter: blur(3px);
+    }
+
+    .guide-nav--prev {
+        left: 1px;
+    }
+
+    .guide-nav--next {
+        right: 1px;
     }
 }
 
 /* La scène réserve la place de la page mise à l'échelle. */
+.guide-viewer {
+    position: relative;
+}
+
 .guide-stage {
     --page-scale: 1;
     width: calc(794px * var(--page-scale));
