@@ -42,6 +42,7 @@ bun run build        # build de production
 bun run generate     # export statique
 bun run build:pdf    # régénère le PDF puis build
 bun run pdf          # régénère public/kazan-no-bushi-2026.pdf
+bun run map          # régénère public/plan-artenium.png (carte du lieu)
 bun run preview      # prévisualisation du build
 bun run lint         # linter oxlint (strict)
 bun run lint:fix     # linter + corrections automatiques
@@ -52,7 +53,8 @@ rapide et le PDF committé est embarqué tel quel. Pour le régénérer et build
 d'un coup, utiliser `bun run build:pdf` (ou `bun run generate:pdf`).
 
 `bun run pdf` fonctionne seul : le script démarre un serveur Nuxt temporaire
-s'il n'y en a pas.
+s'il n'y en a pas. `bun run map` télécharge quelques tuiles OpenStreetMap :
+il nécessite un accès réseau.
 
 Il n'y a pas de tests automatisés ni de script `typecheck`. Une modification est considérée valide quand `bun run lint` et `bun run build` passent, et que le rendu a été vérifié dans le navigateur.
 
@@ -91,6 +93,30 @@ télécharger Chrome à chaque run : c'est la version committée qui est servie.
 Le livret est exclu de ScrollSmoother (voir `app.vue`) : son wrapper
 `position: fixed` tronquait l'impression.
 
+## Carte du lieu
+
+La carte de l'Arténium apparaît sur la page principale et dans la page « Le
+lieu » du livret. Elle combine deux couches dans `components/EventMap.vue` :
+
+- une **carte interactive Leaflet** (tuiles OpenStreetMap), ajoutée côté client ;
+- une **image statique** `public/plan-artenium.png`, toujours rendue, qui sert
+  de repli à l'impression.
+
+Cette image est indispensable au PDF : une carte Leaflet ne s'imprime pas de
+façon fiable (tuiles chargées en JS, page masquée au moment de l'initialisation).
+Le CSS masque la couche Leaflet en impression et laisse apparaître l'image.
+
+L'image est générée par `scripts/build-map.ts`, qui assemble les tuiles OSM et
+dessine le pin de marque, puis la commite dans `public/` :
+
+```bash
+bun run map          # régénère public/plan-artenium.png
+```
+
+**À régénérer si les coordonnées de `VENUE_COORDS` (`utils/site.ts`) changent.**
+Comme le PDF, l'image n'est pas régénérée par `bun run build` ni par la CI :
+c'est la version committée qui est servie.
+
 ## Structure
 
 ```text
@@ -101,26 +127,29 @@ pages/                   # routes (un dossier pages/ fait de app.vue la coquille
   guide.vue              # livret d'information feuilletable (A4)
 scripts/
   build-pdf.ts           # génère public/kazan-no-bushi-2026.pdf
+  build-map.ts           # génère public/plan-artenium.png (carte du lieu)
 components/              # composants auto-importés (PascalCase)
   HeroSection.vue        # hero plein écran, épinglé par ScrollTrigger (#hero)
   InfoSection.vue        # regroupe les sections de contenu + footer
   Highlights.vue         # mise en avant
   Program.vue            # programme du week-end
   Categories.vue         # catégories et niveaux
-  Venue.vue              # lieu et accès
+  Venue.vue              # lieu et accès (avec la carte)
+  EventMap.vue           # carte du lieu : Leaflet + image de repli
   Registration.vue       # inscriptions
   CountDown.vue          # compte à rebours (Luxon)
   Partners.vue           # partenaires
   Contact.vue            # moyens de contact
 app/assets/css/main.css  # styles globaux + thème Tailwind
-public/                  # images, logos, favicon, partenaires/, livret PDF
+public/                  # images, logos, favicon, partenaires/, livret PDF, carte
 TODO.md                  # tâches en cours pour l'édition
 .opencode/               # configuration OpenCode (agents, commandes, permissions)
 .oxlintrc.jsonc          # configuration du linter
 ```
 
-Le livret PDF (`public/kazan-no-bushi-2026.pdf`) est un fichier généré : il
-est committé pour être servi, mais il ne faut pas l'éditer à la main.
+Le livret PDF (`public/kazan-no-bushi-2026.pdf`) et la carte
+(`public/plan-artenium.png`) sont des fichiers générés : ils sont committés
+pour être servis, mais il ne faut pas les éditer à la main.
 
 ## Conventions
 

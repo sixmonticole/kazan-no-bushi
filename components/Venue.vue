@@ -64,6 +64,13 @@ const { address } = EVENT;
                     </template>
                 </Card>
             </div>
+
+            <div
+                data-lag="0.25"
+                class="mt-5 overflow-hidden rounded-[14px] shadow-[0_18px_40px_-22px_rgba(6,12,33,0.8)]"
+            >
+                <EventMap height="320px" :zoom="15" />
+            </div>
         </div>
     </div>
 </template>

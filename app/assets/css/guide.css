@@ -590,6 +590,11 @@
     font-style: normal;
 }
 
+/* La carte du lieu s'imprime avec la page : cadre sobre, sans arrondi en print. */
+.venue__map {
+    margin-top: 18px;
+}
+
 .venue strong {
     display: block;
     font-size: 17px;
@@ -834,7 +839,8 @@
     .hotels li,
     .partners li,
     .note,
-    .callout {
+    .callout,
+    .event-map {
         print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
     }
@@ -843,7 +849,8 @@
     .hotels li,
     .partners li,
     .note,
-    .callout {
+    .callout,
+    .event-map {
         break-inside: avoid;
         page-break-inside: avoid;
     }

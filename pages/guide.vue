@@ -29,6 +29,7 @@ const programme: ScheduleDay[] = SCHEDULE.map((day) => ({
         time: event.time,
         label: event.label,
         detail: event.detail,
+        emphasis: event.emphasis,
     })),
 }));
 

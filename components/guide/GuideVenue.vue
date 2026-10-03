@@ -22,6 +22,8 @@ const displayUrl = useDisplayUrl();
             <li>Gymnase adapté avec un accès handicapé.</li>
         </ul>
 
+        <EventMap class="venue__map" height="230px" :zoom="15" />
+
         <h2 class="sheet__title sheet__title--spaced">Hébergement</h2>
         <p class="sheet__lead">
             Prix indicatifs, à confirmer auprès des établissements. L'hôtel de

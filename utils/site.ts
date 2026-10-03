@@ -15,6 +15,12 @@ const VENUE_NAME = "Artenium";
 const VENUE_CITY = "Ceyrat";
 
 /**
+ * Coordonnées de l'Arténium (Parc de l'Artière, Ceyrat), relevées sur
+ * OpenStreetMap : elles centrent la carte affichée sur le site et le livret.
+ */
+export const VENUE_COORDS = { lat: 45.735_187_9, lng: 3.068_851_7 } as const;
+
+/**
  * Description destinée aux résultats de recherche. Elle vise les requêtes
  * utiles (« stage kendo », « compétition kendo Auvergne ») plutôt que de
  * répéter le titre.

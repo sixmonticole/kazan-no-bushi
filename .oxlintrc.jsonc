@@ -24,6 +24,7 @@
     "onUnmounted": "readonly",
     "defineProps": "readonly",
     "defineEmits": "readonly",
+    "withDefaults": "readonly",
     "resolveComponent": "readonly",
     "usePlanCardPt": "readonly",
     "useCountdown": "readonly",
@@ -36,10 +37,12 @@
     "fetch": "readonly",
     "window": "readonly",
     "document": "readonly",
+    "ResizeObserver": "readonly",
     "setInterval": "readonly",
     "clearInterval": "readonly",
     "setTimeout": "readonly",
     "clearTimeout": "readonly",
+    "Buffer": "readonly",
   },
   "categories": {
     "correctness": "error",
@@ -55,6 +58,9 @@
     "typescript/consistent-type-imports": "error",
     "typescript/no-floating-promises": "error",
     "import/no-cycle": "error",
+    // Les feuilles de style (ex. `leaflet/dist/leaflet.css`) s'importent pour
+    // leur effet de bord : l'import non assigné est ici volontaire.
+    "import/no-unassigned-import": "off",
     // Les fichiers de données (`utils/content.ts`) grandissent par nature :
     // le découpage en modules multiples n'apporterait rien.
     "max-lines": "off",
