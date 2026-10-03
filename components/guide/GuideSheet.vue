@@ -35,9 +35,9 @@ withDefaults(
                 <img
                     src="/logo-asm.png"
                     alt="ASM Kendo"
-                    class="h-[54px] w-[54px] shrink-0 rounded-full print:h-11 print:w-11"
-                    width="225"
-                    height="225"
+                    class="mt-2 h-9 w-auto shrink-0 print:h-8"
+                    width="3231"
+                    height="1183"
                 />
             </header>
         </slot>

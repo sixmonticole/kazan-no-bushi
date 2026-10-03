@@ -48,10 +48,10 @@ onBeforeUnmount(() => {
         <div class="relative z-10 flex flex-col items-center px-5">
             <img
                 src="/logo-asm.png"
-                alt="Logo ASM Kendo"
-                width="225"
-                height="225"
-                class="w-24 h-24 sm:w-32 sm:h-32 mb-6 drop-shadow-xl rounded-full"
+                alt="ASM Kendo"
+                width="3231"
+                height="1183"
+                class="h-12 sm:h-16 w-auto mb-6 drop-shadow-[0_0_3px_rgba(248,241,227,0.85)]"
             />
             <h1
                 class="font-title text-[clamp(54px,10vw,120px)] leading-none tracking-wide text-plan-cream-200 drop-shadow-[0_2px_0_rgba(20,31,69,0.6)]"

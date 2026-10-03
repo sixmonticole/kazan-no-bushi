@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
+    "build:brand": "node --experimental-strip-types scripts/build-brand.ts",
     "build:pdf": "bun run pdf && nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
