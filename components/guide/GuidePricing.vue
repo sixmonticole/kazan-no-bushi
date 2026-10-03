@@ -41,7 +41,7 @@ const tableRows = computed(() =>
         </GuideNote>
 
         <div
-            class="mt-6 border-l-[3px] border-plan-navy-700/25 bg-plan-navy-700/[0.05] px-4.5 py-3.5 text-[13.5px] print:break-inside-avoid print:[print-color-adjust:exact]"
+            class="mt-4 border-l-[3px] border-plan-navy-700/25 bg-plan-navy-700/[0.05] px-4.5 py-3.5 text-[13.5px] print:break-inside-avoid print:[print-color-adjust:exact]"
         >
             <p
                 class="mb-1 text-[10.5px] font-bold tracking-[0.2em] uppercase text-plan-navy-700/70"
@@ -51,10 +51,10 @@ const tableRows = computed(() =>
             <p class="text-plan-navy-700/85">{{ ONSITE_PAYMENT_NOTE }}</p>
         </div>
 
-        <div class="mt-8 flex flex-col items-center text-center">
+        <div class="mt-4 flex flex-col items-center text-center">
             <a
                 :href="GUIDE_LINKS.registration.href"
-                class="group relative inline-flex items-center gap-4 overflow-hidden rounded-full bg-plan-orange-400 px-9 py-5 text-plan-navy-900 shadow-[0_10px_28px_-8px_rgba(232,164,92,0.75)] ring-1 ring-plan-orange-400/60 transition-transform hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-8px_rgba(232,164,92,0.85)] print:shadow-none print:[print-color-adjust:exact]"
+                class="group relative inline-flex items-center gap-4 overflow-hidden rounded-full bg-plan-orange-400 px-9 py-4 text-plan-navy-900 shadow-[0_10px_28px_-8px_rgba(232,164,92,0.75)] ring-1 ring-plan-orange-400/60 transition-transform hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-8px_rgba(232,164,92,0.85)] print:shadow-none print:[print-color-adjust:exact]"
             >
                 <span
                     class="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-700 group-hover:translate-x-full motion-reduce:hidden"

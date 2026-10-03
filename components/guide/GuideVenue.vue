@@ -25,15 +25,15 @@ const VENUE_NOTES = [
         </address>
         <GuideChecks :items="VENUE_NOTES" tight />
 
-        <EventMap class="mt-4.5" height="230px" :zoom="15" />
+        <EventMap class="mt-4" height="210px" :zoom="15" />
 
-        <GuideSubtitle label="Hébergement" />
+        <GuideSubtitle label="Hébergement" tight />
         <p class="mt-4 text-plan-navy-700/78">
             Prix indicatifs, à confirmer auprès des établissements. L'hôtel de
             L'Artière est le plus proche du gymnase.
         </p>
 
-        <ul class="mt-3 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2">
+        <ul class="mt-3 grid list-none grid-cols-2 gap-3 p-0">
             <li
                 v-for="hotel in hotels"
                 :key="hotel.name"

@@ -12,9 +12,7 @@ defineProps<{
     <GuideSheet title="Nos partenaires">
         <p class="mt-4 text-plan-navy-700/78">Merci pour leur soutien.</p>
 
-        <ul
-            class="mt-3 grid list-none grid-cols-4 gap-3.5 p-0 max-sm:grid-cols-1"
-        >
+        <ul class="mt-3 grid list-none grid-cols-4 gap-3.5 p-0">
             <li
                 v-for="partner in partners"
                 :key="partner.file"

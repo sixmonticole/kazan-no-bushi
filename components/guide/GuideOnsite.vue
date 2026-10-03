@@ -40,9 +40,7 @@ const shopItems = computed(() =>
         <GuideDefinitionList :items="shopItems" />
 
         <GuideSubtitle label="Nous contacter" />
-        <ul
-            class="mt-3.5 grid list-none grid-cols-1 gap-x-6 gap-y-3.5 p-0 sm:grid-cols-2"
-        >
+        <ul class="mt-3.5 grid list-none grid-cols-2 gap-x-6 gap-y-3.5 p-0">
             <GuideLinkLine
                 label="Par e-mail"
                 :href="`mailto:${CONTACT_EMAIL}`"

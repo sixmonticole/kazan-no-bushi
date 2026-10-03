@@ -77,7 +77,7 @@ defineProps<{
                 <li
                     v-for="event in day.events"
                     :key="event.time"
-                    class="grid grid-cols-[110px_1fr] gap-4 border-b border-plan-navy-700/[0.08] py-2 max-sm:grid-cols-1 max-sm:gap-0.5"
+                    class="grid grid-cols-[110px_1fr] gap-4 border-b border-plan-navy-700/[0.08] py-2"
                 >
                     <span class="font-black tabular-nums text-plan-navy-700">
                         {{ event.time }}
