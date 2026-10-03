@@ -32,7 +32,7 @@ defineProps<{
         </ul>
 
         <p
-            class="mt-7.5 rounded-[14px] bg-plan-orange-400 px-5.5 py-4 text-center text-base font-black text-plan-navy-900 print:break-inside-avoid print:[print-color-adjust:exact]"
+            class="mt-7.5 border-l-[3px] border-plan-orange-400 bg-plan-orange-400/10 px-4.5 py-3.5 text-center text-[13.5px] text-plan-navy-700/85 italic print:break-inside-avoid print:[print-color-adjust:exact]"
         >
             {{ GUIDE_CLOSING }}
         </p>
