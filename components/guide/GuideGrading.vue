@@ -20,15 +20,30 @@ const NOTES = [
 <template>
     <GuideSheet title="Passage de grade" spacious>
         <p class="mt-5 text-plan-navy-700/78">
-            Le samedi soir, du 1ᵉʳ au 3ᵉ dan. Les frais d'inscription se règlent
-            sur HelloAsso — en ligne, ou en espèces sur place avec un code de
-            paiement (voir ci-dessous). Les frais de validation, eux, se règlent
-            en espèces sur place en cas de réussite.
+            Le samedi soir, du 1ᵉʳ au 3ᵉ dan. Le passage de grade implique
+            <b>deux paiements distincts</b> :
         </p>
+        <ul
+            class="mt-2.5 list-disc pl-5 text-plan-navy-700/78 marker:text-plan-orange-400"
+        >
+            <li>
+                <b>l'inscription</b>, due pour se présenter à l'examen : sur
+                HelloAsso (en ligne, ou en espèces sur place avec un code de
+                paiement, voir ci-dessous) ;
+            </li>
+            <li>
+                <b>la validation</b>, due uniquement en cas de réussite :
+                <b>en espèces sur place</b>, le soir même.
+            </li>
+        </ul>
 
         <GuideTable
             caption="Frais de passage de grade"
-            :columns="['Grade', 'Inscription', 'Validation']"
+            :columns="[
+                'Grade',
+                'Inscription (présentation)',
+                'Validation (réussite, en espèces)',
+            ]"
             :rows="tableRows"
             spacious
         />
