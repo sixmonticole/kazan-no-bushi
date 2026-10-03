@@ -3,6 +3,7 @@ import type { PriceRow } from "~/utils/content";
 import {
     GUIDE_LINKS,
     HELLOASSO_NOTE,
+    ONSITE_PAYMENT_NOTE,
     REGISTRATION_DEADLINE,
     REGISTRATION_REMINDER,
     REGISTRATION_REQUIREMENTS,
@@ -38,6 +39,17 @@ const tableRows = computed(() =>
             <p>{{ REGISTRATION_REMINDER }}</p>
             <p class="mt-2">{{ HELLOASSO_NOTE }}</p>
         </GuideNote>
+
+        <div
+            class="mt-6 border-l-[3px] border-plan-navy-700/25 bg-plan-navy-700/[0.05] px-4.5 py-3.5 text-[13.5px] print:break-inside-avoid print:[print-color-adjust:exact]"
+        >
+            <p
+                class="mb-1 text-[10.5px] font-bold tracking-[0.2em] uppercase text-plan-navy-700/70"
+            >
+                Payer en espèces sur place
+            </p>
+            <p class="text-plan-navy-700/85">{{ ONSITE_PAYMENT_NOTE }}</p>
+        </div>
 
         <div class="mt-8 flex flex-col items-center text-center">
             <a
@@ -80,7 +92,8 @@ const tableRows = computed(() =>
             </a>
             <p class="mt-2.5 text-[12.5px] text-plan-navy-700/60">
                 Paiement en ligne sécurisé, avant le
-                {{ REGISTRATION_DEADLINE }}.
+                {{ REGISTRATION_DEADLINE }} — ou en espèces sur place avec un
+                code de paiement.
             </p>
         </div>
     </GuideSheet>
