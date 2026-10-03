@@ -10,7 +10,7 @@ defineProps<{
     <section class="sheet">
         <GuideSheetHeader title="Programme du week-end" />
         <p class="sheet__lead">
-            L'Arténium ouvre ses portes dès 9h30 le samedi. Les horaires
+            L'Arténium ouvre ses portes dès 9h le samedi. Les horaires
             ci-dessous sont donnés à titre indicatif et peuvent évoluer jusqu'au
             jour J.
         </p>

@@ -20,8 +20,8 @@ const displayUrl = useDisplayUrl();
         <GuideSheetHeader title="Tarifs et inscription" />
         <p class="sheet__lead">
             Inscriptions en ligne, sur notre page HelloAsso, avant le
-           <b> {{ REGISTRATION_DEADLINE }} </b>. Aucune inscription ne sera prise le
-            jour même, sur place.
+            <b> {{ REGISTRATION_DEADLINE }} </b>. Aucune inscription ne sera
+            prise le jour même, sur place.
         </p>
 
         <table class="table">
@@ -58,12 +58,12 @@ const displayUrl = useDisplayUrl();
 
         <p class="link-line">
             <span class="eyebrow">Inscription en ligne</span>
-            <a :href="GUIDE_LINKS.registration.href">
+            <a
+                :href="GUIDE_LINKS.registration.href"
+                class="mt-8 px-[30px] py-4 rounded-full border border-plan-orange-400/55 bg-plan-orange-400/[0.08] text-[15px] font-bold tracking-[0.06em] text-plan-orange-300"
+            >
                 {{ GUIDE_LINKS.registration.label }}
             </a>
-            <span class="link-line__url">
-                {{ displayUrl(GUIDE_LINKS.registration.href) }}
-            </span>
         </p>
     </section>
 </template>

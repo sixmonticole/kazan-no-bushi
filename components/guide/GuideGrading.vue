@@ -11,7 +11,8 @@ defineProps<{
         <GuideSheetHeader title="Passage de grade" />
         <p class="sheet__lead">
             Le samedi soir, du 1ᵉʳ au 3ᵉ dan. Frais d'inscription à régler en
-            ligne, frais de validation en espèces sur place en cas de réussite.
+            ligne de préférence sur le HelloAsso, possibilité en espèce sur
+            place. Frais de validation en espèces sur place en cas de réussite.
         </p>
 
         <table class="table">
@@ -38,14 +39,14 @@ defineProps<{
         <ul class="checks">
             <li>
                 Le passage de grade se déroule le samedi soir, après la fin du
-                stage.
+                stage (environ 16h30)
             </li>
             <li>
                 Les résultats sont annoncés sur place, puis publiés par le club
                 dans les jours qui suivent.
             </li>
             <li>
-                Prévoyez votre licence et votre passeport sportif le jour de
+                Prévoyez vos licences et votre passeport sportif le jour de
                 l'examen.
             </li>
         </ul>
