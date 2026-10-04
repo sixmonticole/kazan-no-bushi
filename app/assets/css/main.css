@@ -1,9 +1,22 @@
 @import "tailwindcss";
 
+/*
+ * Police des titres : « BM Euljiro 10 Years Later » (Woowa Brothers, OFL).
+ * Auto-hébergée car elle n'est pas sur Google Fonts ; le fichier est un
+ * sous-ensemble latin pour rester léger (le fichier complet pèse ~7 Mo).
+ */
+@font-face {
+    font-family: "BM Euljiro 10 years later";
+    src: url("/fonts/BMEuljiro10yearslater-subset.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 @theme {
     --font-brush: "Yomogi", cursive;
     --font-zen: "Zen Kaku Gothic New", system-ui, sans-serif;
-    --font-title: "Protest Revolution";
+    --font-title: "BM Euljiro 10 years later";
 
     --color-plan-navy-900: #141f45;
     --color-plan-navy-700: #1b2a5b;

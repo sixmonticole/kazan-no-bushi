@@ -17,7 +17,7 @@ const FONT_LINKS = [
     { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
     {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Protest+Revolution&family=Yomogi&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Yomogi&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap",
     },
 ] as const;
 
