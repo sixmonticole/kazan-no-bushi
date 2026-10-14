@@ -13,8 +13,6 @@ aujourd'hui des valeurs provisoires, à remplacer par les vraies.
       dans `utils/content.ts`.
 - [ ] **Date limite d'inscription** — `REGISTRATION_DEADLINE` dans
       `utils/content.ts` est fixée au 13 novembre 2026, à confirmer.
-- [ ] **Photos des artisans** — le livret 2025 montrait leurs produits. Pour
-      l'instant, seuls le nom et la description figurent (`SHOPS`).
 - [ ] **Année de naissance des catégories** — `AGE_CATEGORIES` a été décalée
       d'un an par rapport à 2025. À confirmer avec le règlement FFKDA.
 
