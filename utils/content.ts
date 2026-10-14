@@ -135,17 +135,17 @@ export const PARTNERS: Partner[] = [
         wide: true,
         keepSize: true,
     },
-    { file: "francekendo.png", name: "France Kendo", keepSize: true },
-    { file: "CRKaura.png", name: "CRK Aura" },
-    { file: "Cam.png", name: "Clermont Auvergne Métropole" },
-    { file: "volvic.png", name: "Volvic", keepSize: true },
-    { file: "sooji.png", name: "Sooji" },
-    { file: "maison_koji.png", name: "La Maison du Koji" },
-    { file: "wagaya.png", name: "Wagaya" },
     { file: "painpaill.png", name: "Au Pain Paillasse" },
+    { file: "Cam.png", name: "Clermont Auvergne Métropole" },
+    { file: "CRKaura.png", name: "CRK Aura" },
+    { file: "francekendo.png", name: "France Kendo", keepSize: true },
+    { file: "maison_koji.png", name: "La Maison du Koji" },
     { file: "chaton.png", name: "Les Heures Qui Filent" },
-    { file: "tatsei.png", name: "Tatsei" },
+    { file: "sooji.png", name: "Sooji" },
     { file: "sunfuckingLove.png", name: "SunfLover Graphisme" },
+    { file: "tatsei.png", name: "Tatsei" },
+    { file: "volvic.png", name: "Volvic", keepSize: true },
+    { file: "wagaya.png", name: "Wagaya" },
 ];
 
 export interface ContactChannel {
@@ -309,56 +309,64 @@ export const COMPETITION_NOTES = [
 
 export interface GuideHotel {
     name: string;
-    price: string;
     address: string;
     phone: string;
-    url: string;
+    url?: string;
+    email?: string;
+    /** Tarifs négociés pour la Kazan, libellé puis montant. */
+    rates: Array<{ label: string; price: string }>;
+    /** Taxe de séjour, rappelée quand elle n'est pas incluse dans les tarifs. */
+    tax?: string;
+    /** Comment obtenir le tarif négocié (code promo ou mention du club). */
+    procedure: string;
+    /** Complément tarifaire hors forfait (cas particuliers). */
+    note?: string;
     closest?: boolean;
 }
 
+/**
+ * Hôtels à tarif négocié pour l'édition 2026. La mention ou le code doit être
+ * impérativement cité à la réservation pour que le tarif s'applique.
+ */
 export const HOTELS: GuideHotel[] = [
     {
-        name: "Hôtel de L'Artière",
-        price: "à partir de 59 €",
-        address: "75 avenue de la Libération, 63122 Ceyrat",
-        phone: "+33 4 73 61 43 02",
-        url: "https://www.hotel-artiere.com",
-        closest: true,
+        name: "Hôtel & Restaurant Le Gergovie",
+        address: "25 allée du Petit Puy, 63170 Pérignat-lès-Sarliève",
+        phone: "04 73 79 09 95",
+        email: "commercial@hotel-legergovie.com",
+        rates: [
+            {
+                label: "Nuitée single, petit déjeuner inclus",
+                price: "120,00 €",
+            },
+            {
+                label: "Nuitée double, petit déjeuner inclus",
+                price: "130,00 €",
+            },
+        ],
+        tax: "Taxe de séjour 2026 : 2,20 € par nuit et par personne.",
+        procedure:
+            "Pas de code promo : signalez « ASM KENDO » lors de la réservation.",
+        note: "Le vendredi soir, chambre à 130,00 € hors petit déjeuner (16,90 € par personne) : soit 146,90 € pour une personne et 163,80 € pour deux.",
     },
     {
-        name: "The Originals Boutique — Hôtel Le Marmotel",
-        price: "à partir de 69 €",
-        address: "18 avenue Winston Churchill, 63000 Clermont-Ferrand",
-        phone: "+33 4 73 26 24 55",
-        url: "https://www.hotel-marmotel.com",
-    },
-    {
-        name: "Kyriad ECO — Clermont-Ferrand Estaing",
-        price: "à partir de 53 €",
-        address: "16 place Lucie et Raymond Aubrac, 63100 Clermont-Ferrand",
-        phone: "+33 4 15 40 08 68",
-        url: "https://www.kyriad.com",
-    },
-    {
-        name: "Campanile Clermont-Ferrand Centre",
-        price: "à partir de 55 €",
-        address: "120 avenue de la République, 63100 Clermont-Ferrand",
-        phone: "+33 4 15 40 05 76",
-        url: "https://www.campanile.com",
-    },
-    {
-        name: "Kyriad Clermont-Ferrand Sud — La Pardieu",
-        price: "à partir de 71 €",
-        address: "9 rue de l'Éminée, 63000 Clermont-Ferrand",
-        phone: "+33 4 73 28 24 24",
-        url: "https://www.kyriad.com",
-    },
-    {
-        name: "Hôtel Mercure Clermont-Ferrand Jaude",
-        price: "à partir de 115 €",
-        address: "1 avenue Julien, 63000 Clermont-Ferrand",
-        phone: "+33 4 63 66 21 00",
-        url: "https://all.accor.com",
+        name: "Holiday Inn Clermont-Ferrand Centre",
+        address: "59 boulevard François Mitterrand, 63000 Clermont-Ferrand",
+        phone: "04 73 17 48 48",
+        email: "clermont@hiclermont.com",
+        rates: [
+            {
+                label: "Chambre individuelle, petit déjeuner inclus",
+                price: "75 €",
+            },
+            {
+                label: "Chambre double ou twin, petits déjeuners inclus",
+                price: "90 €",
+            },
+        ],
+        tax: "Taxe de séjour : 2,20 € par personne et par nuit.",
+        procedure:
+            "Réservez auprès de la réception en mentionnant le code promotionnel BWKENDO2026.",
     },
 ];
 
@@ -381,19 +389,39 @@ export const SERVICES = [
     },
 ];
 
-/** Artisans et boutiques présents pendant le week-end. */
-export const SHOPS = [
-    {
-        name: "Les Heures Qui Filent",
-        description: "Tsuba, chichikawa, accessoires en cuir",
-    },
+export interface Shop {
+    name: string;
+    /** Liste des activités, affichée ligne par ligne. */
+    description: string[];
+    file: string;
+    url: string;
+}
+
+/** Artisans et boutiques présents pendant le week-end, par ordre alphabétique. */
+export const SHOPS: Shop[] = [
     {
         name: "La Maison du Koji",
-        description: "Spécialités japonaises",
+        description: ["Spécialités japonaises"],
+        file: "maison_koji.png",
+        url: "https://lamaisondukoji.com",
+    },
+    {
+        name: "Les Heures Qui Filent",
+        description: [
+            "Créations en cuir faites main avec passion et amour",
+            "Maroquinerie",
+            "Commandes personnalisées",
+            "Objets pour le Kendo",
+            "Médailles sportives",
+        ],
+        file: "chaton.png",
+        url: "https://lesheuresquifilent.com",
     },
     {
         name: "Tatsei",
-        description: "Entreprise française de matériel de kendo",
+        description: ["Entreprise française de matériel de kendo"],
+        file: "tatsei.png",
+        url: "https://store.tatsei.com",
     },
 ];
 

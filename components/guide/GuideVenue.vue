@@ -29,11 +29,12 @@ const VENUE_NOTES = [
 
         <GuideSubtitle label="Hébergement" tight />
         <p class="mt-4 text-plan-navy-700/78">
-            Prix indicatifs, à confirmer auprès des établissements. L'hôtel de
-            L'Artière est le plus proche du gymnase.
+            Deux hôtels nous accordent un tarif préférentiel pour la Kazan.
+            Pensez à indiquer le code ou la mention du club au moment de
+            réserver, sans quoi l'offre ne s'applique pas.
         </p>
 
-        <ul class="mt-3 grid list-none grid-cols-2 gap-3 p-0">
+        <ul class="mt-3 grid list-none grid-cols-1 gap-3 p-0">
             <li
                 v-for="hotel in hotels"
                 :key="hotel.name"
@@ -45,15 +46,53 @@ const VENUE_NOTES = [
                         Le plus proche
                     </GuideBadge>
                 </p>
-                <p class="mt-0.5 text-[12.5px] font-bold text-plan-bronze-600">
-                    {{ hotel.price }}
-                </p>
                 <p class="mt-1.5 text-[12.5px] text-plan-navy-700/72">
-                    {{ hotel.address }}
+                    {{ hotel.address }}<br />
+                    {{ hotel.phone }}
+                    <template v-if="hotel.email">
+                        &middot;
+                        <span class="break-all">{{ hotel.email }}</span>
+                    </template>
+                    <template v-if="hotel.url">
+                        &middot;
+                        <span class="break-all">{{
+                            displayUrl(hotel.url)
+                        }}</span>
+                    </template>
                 </p>
-                <p class="mt-1.5 text-[12.5px] text-plan-navy-700/72">
-                    {{ hotel.phone }} &middot;
-                    <span class="break-all">{{ displayUrl(hotel.url) }}</span>
+                <dl
+                    class="mt-2 grid list-none grid-cols-1 gap-x-4 gap-y-0.5 p-0"
+                >
+                    <div
+                        v-for="rate in hotel.rates"
+                        :key="rate.label"
+                        class="flex items-baseline justify-between gap-3"
+                    >
+                        <dt class="text-[12.5px] text-plan-navy-700/72">
+                            {{ rate.label }}
+                        </dt>
+                        <dd
+                            class="shrink-0 text-[12.5px] font-bold text-plan-bronze-600"
+                        >
+                            {{ rate.price }}
+                        </dd>
+                    </div>
+                </dl>
+                <p
+                    v-if="hotel.tax"
+                    class="mt-1 text-[11.5px] text-plan-navy-700/60"
+                >
+                    {{ hotel.tax }}
+                </p>
+                <p class="mt-2 text-[12.5px] text-plan-navy-700">
+                    <span class="font-bold">Réservation&nbsp;:</span>
+                    {{ hotel.procedure }}
+                </p>
+                <p
+                    v-if="hotel.note"
+                    class="mt-1.5 text-[11.5px] text-plan-navy-700/60"
+                >
+                    {{ hotel.note }}
                 </p>
             </li>
         </ul>
