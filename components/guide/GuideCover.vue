@@ -11,14 +11,14 @@ const COVER_DATE = "28 & 29 novembre 2026";
         class="sheet sheet--cover relative h-[1123px] w-[794px] overflow-hidden bg-plan-navy-900"
     >
         <img
-            src="/fond-mila.jpeg"
+            src="/fond-guide-couverture.jpeg"
             alt=""
             class="absolute inset-0 h-full w-full object-cover object-center print:[print-color-adjust:exact]"
-            width="1960"
-            height="1310"
+            width="1448"
+            height="2048"
         />
         <div
-            class="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,31,69,0.55)_0%,rgba(20,31,69,0.7)_50%,rgba(20,31,69,0.92)_100%)] print:[print-color-adjust:exact]"
+            class="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,31,69,0.5)_0%,rgba(20,31,69,0.14)_22%,rgba(20,31,69,0.3)_42%,rgba(20,31,69,0.26)_58%,rgba(20,31,69,0.34)_78%,rgba(20,31,69,0.8)_100%)] print:[print-color-adjust:exact]"
         />
 
         <div
@@ -32,27 +32,29 @@ const COVER_DATE = "28 & 29 novembre 2026";
             </p>
             <span class="mt-4 h-[3px] w-[90px] bg-plan-orange-400" />
 
-            <!-- Zone centrale : le bloc principal, centré verticalement. -->
+            <!-- Zone centrale : le titre seul, lisible sur le soleil. -->
             <div class="flex flex-1 flex-col items-center justify-center">
                 <h1
-                    class="font-title text-[clamp(84px,15vw,136px)] leading-[0.92] tracking-[0.02em] text-white text-shadow-[0_2px_0_rgba(20,31,69,0.5)]"
+                    class="font-title text-[clamp(84px,15vw,136px)] leading-[0.92] tracking-[0.02em] text-white text-shadow-[0_4px_18px_rgba(20,31,69,0.85),0_2px_3px_rgba(20,31,69,0.9)]"
                 >
                     Kazan<br />No Bushi
                 </h1>
-                <p class="mt-6.5 font-brush text-[52px] text-plan-orange-400">
-                    {{ EDITION }} &middot;
-                    {{ EDITION_YEAR }}
-                </p>
-                <p
-                    class="mt-4 text-[22px] font-bold tracking-[0.16em] uppercase text-plan-ice-200"
-                >
-                    {{ COVER_DATE }} &middot; Arténium, Ceyrat
-                </p>
             </div>
 
-            <!-- Zone basse : le libellé et le paragraphe d'accueil, au ras du bas. -->
+            <!-- Zone basse : l'édition, la date et l'accueil, sur l'encart sombre. -->
             <p
-                class="text-[17px] font-bold tracking-[0.3em] uppercase text-plan-cream-100/65"
+                class="font-brush text-[42px] leading-none text-plan-orange-400 text-shadow-[0_3px_14px_rgba(20,31,69,0.95)]"
+            >
+                {{ EDITION }} &middot;
+                {{ EDITION_YEAR }}
+            </p>
+            <p
+                class="mt-3 text-[21px] font-bold tracking-[0.16em] uppercase text-plan-cream-100 text-shadow-[0_2px_10px_rgba(20,31,69,0.95)]"
+            >
+                {{ COVER_DATE }} &middot; Arténium, Ceyrat
+            </p>
+            <p
+                class="mt-7 text-[17px] font-bold tracking-[0.3em] uppercase text-plan-cream-100/65"
             >
                 Guide et informations
             </p>
