@@ -21,9 +21,10 @@ bun run generate     # génération statique
 bun run preview      # prévisualisation du build
 bun run lint         # oxlint strict (correctness + suspicious + pedantic + perf)
 bun run lint:fix     # oxlint avec correction automatique
+bun run typecheck    # vérification des types (nuxt typecheck)
 ```
 
-Il n'y a pas de tests automatisés ni de script `typecheck`. Vérifier une modification = `bun run lint` + `bun run build` + contrôle visuel sur `bun run dev`.
+Il n'y a pas de tests automatisés. Vérifier une modification = `bun run lint` + `bun run typecheck` + `bun run build` + contrôle visuel sur `bun run dev`.
 
 ## Structure
 

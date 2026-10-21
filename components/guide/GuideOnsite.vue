@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { ContactChannel, Shop } from "~/utils/content";
-import { CONTACT_CHANNELS, REGISTRATION_LABEL } from "~/utils/content";
+import {
+    CONTACT_CHANNELS,
+    REGISTRATION_LABEL,
+    REGISTRATION_PENDING,
+} from "~/utils/content";
 import { CONTACT_EMAIL } from "~/utils/site";
 
 const props = defineProps<{
@@ -91,6 +95,7 @@ const serviceItems = computed(() =>
                 :href="registrationUrl ?? undefined"
                 :link="REGISTRATION_LABEL"
                 :url="registrationUrl ? displayUrl(registrationUrl) : undefined"
+                :pending="REGISTRATION_PENDING"
             />
         </ul>
     </GuideSheet>
