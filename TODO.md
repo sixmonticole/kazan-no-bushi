@@ -7,8 +7,9 @@
 Ces informations sont affichées sur le site et dans le livret PDF. Elles sont
 aujourd'hui des valeurs provisoires, à remplacer par les vraies.
 
-- [ ] **URL HelloAsso 2026** — remplace `REGISTRATION_URL` dans `utils/content.ts`.
-      Sert au bouton d'inscription et au QR code du livret.
+- [ ] **URL HelloAsso 2026** — renseigner `NUXT_PUBLIC_HELLOASSO_URL` dans
+      `.env` (voir README). Tant qu'elle est vide, le site et le livret
+      affichent un texte d'attente à la place des boutons d'inscription.
 - [ ] **Page Facebook de l'événement 2026** — remplace `EVENT_FACEBOOK_URL`
       dans `utils/content.ts`.
 - [ ] **Date limite d'inscription** — `REGISTRATION_DEADLINE` dans

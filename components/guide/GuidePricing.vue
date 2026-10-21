@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type { PriceRow } from "~/utils/content";
 import {
-    GUIDE_LINKS,
     HELLOASSO_NOTE,
     ONSITE_PAYMENT_NOTE,
     REGISTRATION_DEADLINE,
+    REGISTRATION_LABEL,
+    REGISTRATION_PENDING,
     REGISTRATION_REMINDER,
     REGISTRATION_REQUIREMENTS,
 } from "~/utils/content";
@@ -12,6 +13,8 @@ import {
 const props = defineProps<{
     prices: PriceRow[];
 }>();
+
+const { hasRegistration, registrationUrl } = useRegistration();
 
 const tableRows = computed(() =>
     props.prices.map((row) => [row.label, row.oneDay, row.twoDays]),
@@ -53,7 +56,10 @@ const tableRows = computed(() =>
 
         <div class="mt-4 flex flex-col items-center text-center">
             <a
-                :href="GUIDE_LINKS.registration.href"
+                v-if="hasRegistration"
+                :href="registrationUrl ?? undefined"
+                target="_blank"
+                rel="noopener noreferrer"
                 class="group relative inline-flex items-center gap-4 overflow-hidden rounded-full bg-plan-orange-400 px-9 py-4 text-plan-navy-900 shadow-[0_10px_28px_-8px_rgba(232,164,92,0.75)] ring-1 ring-plan-orange-400/60 transition-transform hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-8px_rgba(232,164,92,0.85)] print:shadow-none print:[print-color-adjust:exact]"
             >
                 <span
@@ -69,7 +75,7 @@ const tableRows = computed(() =>
                     <span
                         class="font-title text-[22px] font-semibold tracking-[0.02em]"
                     >
-                        {{ GUIDE_LINKS.registration.label }}
+                        {{ REGISTRATION_LABEL }}
                     </span>
                 </span>
                 <span
@@ -90,7 +96,22 @@ const tableRows = computed(() =>
                     </svg>
                 </span>
             </a>
-            <p class="mt-2.5 text-[12.5px] text-plan-navy-700/60">
+
+            <p
+                v-else
+                class="inline-flex items-center gap-3 rounded-full border border-plan-orange-400/55 bg-plan-orange-400/[0.08] px-7 py-3.5 text-[15px] font-bold tracking-[0.06em] text-plan-navy-700"
+            >
+                <span
+                    class="h-2 w-2 rounded-full bg-plan-orange-400"
+                    aria-hidden="true"
+                />
+                {{ REGISTRATION_PENDING }}
+            </p>
+
+            <p
+                v-if="hasRegistration"
+                class="mt-2.5 text-[12.5px] text-plan-navy-700/60"
+            >
                 Paiement en ligne sécurisé, avant le
                 {{ REGISTRATION_DEADLINE }} — ou en espèces sur place avec un
                 code de paiement.

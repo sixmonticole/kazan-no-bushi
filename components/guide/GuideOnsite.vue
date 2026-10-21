@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ContactChannel, Shop } from "~/utils/content";
-import { CONTACT_CHANNELS, GUIDE_LINKS } from "~/utils/content";
+import { CONTACT_CHANNELS, REGISTRATION_LABEL } from "~/utils/content";
 import { CONTACT_EMAIL } from "~/utils/site";
 
 const props = defineProps<{
@@ -9,6 +9,7 @@ const props = defineProps<{
 }>();
 
 const displayUrl = useDisplayUrl();
+const { registrationUrl } = useRegistration();
 
 /** Libellé lisible du réseau social à partir de son type. */
 const CHANNEL_LABELS: Record<ContactChannel["type"], string> = {
@@ -87,9 +88,9 @@ const serviceItems = computed(() =>
             />
             <GuideLinkLine
                 label="Inscriptions"
-                :href="GUIDE_LINKS.registration.href"
-                :link="GUIDE_LINKS.registration.label"
-                :url="displayUrl(GUIDE_LINKS.registration.href)"
+                :href="registrationUrl ?? undefined"
+                :link="REGISTRATION_LABEL"
+                :url="registrationUrl ? displayUrl(registrationUrl) : undefined"
             />
         </ul>
     </GuideSheet>

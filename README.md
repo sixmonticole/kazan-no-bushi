@@ -58,6 +58,18 @@ il nécessite un accès réseau.
 
 Il n'y a pas de tests automatisés ni de script `typecheck`. Une modification est considérée valide quand `bun run lint` et `bun run build` passent, et que le rendu a été vérifié dans le navigateur.
 
+## Variables d'environnement
+
+Copier `.env.example` en `.env` (ce dernier est ignoré par git) et renseigner :
+
+| Variable                    | Rôle                                                                                                                                                                                  |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `NUXT_PUBLIC_HELLOASSO_URL` | Page d'inscription HelloAsso. **Laisser vide tant que les inscriptions sont fermées** : le site et le livret affichent alors un texte d'attente à la place des boutons d'inscription. |
+
+La variable est lue au build comme au rendu : après l'avoir renseignée, relancer
+le serveur de développement, puis régénérer le PDF (`bun run pdf`) pour que le
+livret pointe vers le lien.
+
 ## Pages
 
 | Route    | Description                                                                 |

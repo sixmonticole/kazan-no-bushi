@@ -25,6 +25,17 @@ const MyPreset = definePreset(Aura, {
 export default defineNuxtConfig({
     compatibilityDate: "2026-02-25",
     devtools: { enabled: true },
+    runtimeConfig: {
+        public: {
+            /**
+             * Page d'inscription HelloAsso. Laisser vide tant que les
+             * inscriptions ne sont pas ouvertes : le site affiche alors un
+             * texte d'attente au lieu du bouton. Renseigner via `.env`
+             * (NUXT_PUBLIC_HELLOASSO_URL) une fois le lien disponible.
+             */
+            helloassoUrl: "",
+        },
+    },
     routeRules: {
         "/": { prerender: true },
         "/guide": { prerender: true },

@@ -193,19 +193,21 @@ export interface GuideLink {
 /**
  * Les liens du livret ne peuvent pas être cliqués sur papier : l'URL complète
  * est affichée à côté du libellé par le composant.
+ *
+ * L'inscription n'a pas d'URL en dur : elle vient de la variable
+ * d'environnement (voir `useRegistration`), et son libellé d'attente est
+ * défini ci-dessous.
  */
-export const REGISTRATION_URL = "https://www.helloasso.com";
+export const REGISTRATION_LABEL = "HelloAsso";
+
+/**
+ * Texte affiché à la place du lien tant que l'URL d'inscription n'est pas
+ * renseignée dans l'environnement.
+ */
+export const REGISTRATION_PENDING = "Ouverture des inscriptions — Bientôt";
 export const EVENT_FACEBOOK_URL = "https://www.facebook.com/events/kazankendo";
 
-export const GUIDE_LINKS: Record<
-    "registration" | "facebook" | "instagram",
-    GuideLink
-> = {
-    registration: {
-        label: "HelloAsso",
-        href: REGISTRATION_URL,
-        external: true,
-    },
+export const GUIDE_LINKS: Record<"facebook" | "instagram", GuideLink> = {
     facebook: {
         label: "Page Facebook de l'événement",
         href: EVENT_FACEBOOK_URL,
