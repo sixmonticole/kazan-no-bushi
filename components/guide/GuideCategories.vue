@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { AgeCategory, TeamCategory } from "~/utils/content";
-import { COMPETITION_NOTES } from "~/utils/content";
+import { COMPETITION_NOTES, TEAM_SIZE_NOTE } from "~/utils/content";
 
 const props = defineProps<{
     ages: AgeCategory[];
@@ -34,6 +34,10 @@ const teamRows = computed(() =>
 
         <GuideBlockTitle label="Équipes" />
         <GuideValueList :items="teamRows" />
+
+        <GuideNote>
+            <p>{{ TEAM_SIZE_NOTE }}</p>
+        </GuideNote>
 
         <GuideNote>
             <p>

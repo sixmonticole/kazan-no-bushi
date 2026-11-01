@@ -81,8 +81,6 @@ export const SCHEDULE: ScheduleDay[] = [
                 { label: "Jeunes — ", name: "Marc RAGONA" },
             ],
         },
-        warning:
-            "La pause repas du samedi est courte : 30 minutes seulement. La buvette ouvre dès le matin, pour que chacun puisse prendre à manger avant midi et éviter l'attente à l'heure du repas.",
         events: [
             {
                 time: "9h00",
@@ -90,8 +88,8 @@ export const SCHEDULE: ScheduleDay[] = [
                 emphasis: "key",
             },
             { time: "10h – 12h", label: "Kihon", emphasis: "default" },
-            { time: "12h – 12h30", label: "Pause repas", emphasis: "muted" },
-            { time: "12h30 – 14h", label: "Kihon", emphasis: "default" },
+            { time: "12h – 13h", label: "Pause repas", emphasis: "muted" },
+            { time: "13h – 14h", label: "Kihon", emphasis: "default" },
             { time: "14h – 15h", label: "Ji-geiko", emphasis: "default" },
             {
                 time: "16h",
@@ -306,13 +304,20 @@ export interface TeamCategory {
 export const TEAM_CATEGORIES: TeamCategory[] = [
     {
         name: "Junior et adulte (femme)",
-        details: "Équipes de 3, extensible de 2 à 4 — +18 ans",
+        details: "Équipes de 3 — +18 ans",
     },
     {
         name: "Junior et adulte (mixte)",
-        details: "Équipes de 3, extensible de 2 à 4 — +18 ans",
+        details: "Équipes de 3 — +18 ans",
     },
 ];
+
+/**
+ * Souplesse d'effectif des équipes : une équipe peut tomber à deux si l'un
+ * des combattants tire deux fois, et un remplaçant peut compléter le trio.
+ */
+export const TEAM_SIZE_NOTE =
+    "Une équipe compte 3 combattants, mais elle peut se réduire à 2 si l'un des tireurs combat deux fois, et être complétée par un remplaçant.";
 
 /** Consignes matériel et accueil, valables pour les compétiteurs. */
 export const COMPETITION_NOTES = [
