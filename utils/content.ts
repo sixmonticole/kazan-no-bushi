@@ -67,7 +67,6 @@ export interface ScheduleDay {
     callout: { title: string; items: CalloutItem[]; note?: string } | null;
     warning?: string;
     events: ScheduleEvent[];
-    incomplete?: boolean;
 }
 
 export const SCHEDULE: ScheduleDay[] = [
@@ -120,7 +119,6 @@ export const SCHEDULE: ScheduleDay[] = [
             },
             { time: "9h30", label: "Début des compétitions", emphasis: "key" },
         ],
-        incomplete: true,
     },
 ];
 

@@ -224,13 +224,6 @@ function titleClass(emphasis: Emphasis): string {
                             </template>
                         </li>
                     </ol>
-
-                    <p
-                        v-if="day.incomplete"
-                        class="mt-4 rounded-lg border border-dashed border-plan-navy-700/25 px-3 py-2.5 text-[11px] tracking-[0.06em] text-plan-navy-700/60"
-                    >
-                        suite de déroulé à définir
-                    </p>
                 </div>
             </div>
         </div>
