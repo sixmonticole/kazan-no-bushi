@@ -5,7 +5,7 @@
  * L'image est déposée dans `public/` : voir `PLAN_IMAGE` ci-dessous. Tant
  * qu'elle est absente, le livret affiche un cadre d'attente à la place.
  */
-const PLAN_IMAGE = "/plan-salle.png";
+const PLAN_IMAGE = "/plan-salle.jpg";
 
 const planImage = ref<HTMLImageElement | null>(null);
 
