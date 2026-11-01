@@ -46,7 +46,7 @@ const KAMON_ALPHA = 43;
  * Boîte opaque du logotype dans son fichier source, en pixels (détectée via
  * le canal alpha), pour le même rognage.
  */
-const LOGO_BOUNDS = { x: 196, y: 200, width: 3231, height: 1183 };
+const LOGO_BOUNDS = { x: 283, y: 284, width: 5724, height: 1418 };
 
 /** Fraction du côté de l'icône occupée par la plaque (le reste est de l'air). */
 const PLATE_RATIO = 0.86;

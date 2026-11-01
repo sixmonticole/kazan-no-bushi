@@ -49,8 +49,8 @@ onBeforeUnmount(() => {
             <img
                 src="/logo-asm.png"
                 alt="ASM Kendo"
-                width="3231"
-                height="1183"
+                width="5724"
+                height="1418"
                 class="h-12 sm:h-16 w-auto mb-6 drop-shadow-[0_0_3px_rgba(248,241,227,0.85)]"
             />
             <h1
