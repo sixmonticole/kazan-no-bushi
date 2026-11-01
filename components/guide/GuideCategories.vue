@@ -26,8 +26,7 @@ const teamRows = computed(() =>
     <GuideSheet title="Catégories de la compétition">
         <p class="mt-4 text-plan-navy-700/78">
             Les catégories individuelles sont déterminées par l'année de
-            naissance. Un certificat de surclassement de moins de 3 mois est
-            exigé pour les juniors engagés en catégorie adulte.
+            naissance.
         </p>
 
         <GuideBlockTitle label="Individuels" />
@@ -35,6 +34,14 @@ const teamRows = computed(() =>
 
         <GuideBlockTitle label="Équipes" />
         <GuideValueList :items="teamRows" />
+
+        <GuideNote>
+            <p>
+                Les Juniors de <b>+18 ans</b> peuvent participer aux
+                compétitions adultes Féminine ou Mixte sur présentation d'un
+                certificat de surclassement de <b>moins de 3 mois</b>.
+            </p>
+        </GuideNote>
 
         <GuideChecks :items="COMPETITION_NOTES" tight />
     </GuideSheet>

@@ -8,6 +8,7 @@ import {
     REGISTRATION_PENDING,
     REGISTRATION_REMINDER,
     REGISTRATION_REQUIREMENTS,
+    WEEKEND_NOTES,
 } from "~/utils/content";
 
 const props = defineProps<{
@@ -28,6 +29,8 @@ const tableRows = computed(() =>
             <b> {{ REGISTRATION_DEADLINE }} </b>. Aucune inscription ne sera
             prise le jour même, sur place.
         </p>
+
+        <GuideChecks :items="WEEKEND_NOTES" tight />
 
         <GuideTable
             caption="Stage"

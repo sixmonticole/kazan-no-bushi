@@ -306,11 +306,11 @@ export interface TeamCategory {
 export const TEAM_CATEGORIES: TeamCategory[] = [
     {
         name: "Junior et adulte (femme)",
-        details: "Équipes de 3, extensible de 2 à 4 — nés en 2009 et avant",
+        details: "Équipes de 3, extensible de 2 à 4 — +18 ans",
     },
     {
         name: "Junior et adulte (mixte)",
-        details: "Équipes de 3, extensible de 2 à 4 — nés en 2009 et avant",
+        details: "Équipes de 3, extensible de 2 à 4 — +18 ans",
     },
 ];
 
@@ -319,6 +319,15 @@ export const COMPETITION_NOTES = [
     "Contrôle des passeports et des shinaïs pour tous les compétiteurs.",
     "Indiquez le nom de votre équipe dans le champ libre lors de l'inscription, ou « Ronin » si vous n'avez pas d'équipe identifiée.",
     "Selon le nombre d'inscrits, une catégorie individuelle jeune non mixte pourra devenir mixte : la décision est prise le jour J.",
+];
+
+/**
+ * Rappels valables pour l'ensemble du week-end : ils répondent aux questions
+ * qui reviennent le plus souvent au moment de s'inscrire.
+ */
+export const WEEKEND_NOTES = [
+    "Le stage est ouvert à tous, avec ou sans armure complète.",
+    "Passage de grade : aucune inscription n'est prise le jour J, l'inscription sur HelloAsso est indispensable.",
 ];
 
 export interface GuideHotel {
