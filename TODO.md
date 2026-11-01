@@ -7,7 +7,7 @@
 Ces informations sont affichées sur le site et dans le livret PDF. Elles sont
 aujourd'hui des valeurs provisoires, à remplacer par les vraies.
 
-- [ ] **URL HelloAsso 2026** — renseigner `NUXT_PUBLIC_HELLOASSO_URL` dans
+- [x] **URL HelloAsso 2026** — renseigner `NUXT_PUBLIC_HELLOASSO_URL` dans
       `.env` (voir README). Tant qu'elle est vide, le site et le livret
       affichent un texte d'attente à la place des boutons d'inscription.
 - [ ] **Page Facebook de l'événement 2026** — remplace `EVENT_FACEBOOK_URL`
@@ -19,10 +19,9 @@ aujourd'hui des valeurs provisoires, à remplacer par les vraies.
 
 ## Contenu du site
 
-- [ ] **Compléter le dimanche** — le déroulé des compétitions est marqué
-      `incomplete: true` dans `SCHEDULE` (`utils/content.ts`).
 - [ ] **Ouvrir les inscriptions** — `Registration.vue` affiche encore
-      « Ouverture prochaine ».
+      « Ouverture prochaine » tant que `NUXT_PUBLIC_HELLOASSO_URL` est vide
+      dans `.env`.
 
 ## Avant le week-end
 
