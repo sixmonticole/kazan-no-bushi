@@ -6,6 +6,7 @@ const { hasRegistration, registrationUrl } = useRegistration();
 
 <template>
     <section
+        id="inscription"
         class="max-w-[760px] mx-auto text-center px-5 pt-24 pb-28"
         data-lag="0.1"
     >
@@ -27,32 +28,10 @@ const { hasRegistration, registrationUrl } = useRegistration();
             week-end d'échange et de partage.
         </p>
 
-        <!-- Le livret détaille le programme, les tarifs et l'hébergement. -->
-        <NuxtLink
-            to="/guide"
-            class="group inline-flex items-center gap-2.5 mt-8 text-[13px] font-bold uppercase tracking-[0.22em] text-plan-ice-200/80 hover:text-plan-orange-300 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-plan-orange-300"
+        <!-- L'action principale d'abord, puis le guide en second rideau. -->
+        <div
+            class="mt-8 flex flex-col items-center gap-3.5 sm:flex-row sm:justify-center"
         >
-            Consulter le guide
-            <span
-                class="transition-transform group-hover:translate-x-1"
-                aria-hidden="true"
-            >
-                <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="w-4 h-4"
-                >
-                    <path d="M5 12h13" />
-                    <path d="m12 5 7 7-7 7" />
-                </svg>
-            </span>
-        </NuxtLink>
-
-        <div class="mt-7">
             <a
                 v-if="hasRegistration"
                 :href="registrationUrl ?? undefined"
@@ -90,6 +69,31 @@ const { hasRegistration, registrationUrl } = useRegistration();
                 />
                 {{ REGISTRATION_PENDING }}
             </p>
+
+            <!-- Le livret détaille le programme, les tarifs et l'hébergement. -->
+            <NuxtLink
+                to="/guide"
+                class="group inline-flex items-center gap-2.5 px-[26px] py-[15px] rounded-full border border-plan-cream-100/40 bg-plan-cream-100/[0.06] text-[13px] font-bold uppercase tracking-[0.22em] text-plan-cream-100 transition-colors hover:border-plan-cream-100/70 hover:bg-plan-cream-100/[0.12] hover:text-plan-cream-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-plan-cream-200"
+            >
+                Consulter le guide
+                <span
+                    class="transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                    >
+                        <path d="M5 12h13" />
+                        <path d="m12 5 7 7-7 7" />
+                    </svg>
+                </span>
+            </NuxtLink>
         </div>
     </section>
 </template>
