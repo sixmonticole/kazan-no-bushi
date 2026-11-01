@@ -38,7 +38,7 @@ const programme: ScheduleDay[] = SCHEDULE.map((day) => ({
  * Lecteur de livret : une page A4 à la fois. La page affichée est mise à
  * l'échelle pour tenir dans la fenêtre, comme un lecteur PDF.
  */
-const TOTAL_PAGES = 8;
+const TOTAL_PAGES = 9;
 const currentPage = ref(1);
 
 /** Échelle appliquée aux pages à l'écran (l'impression garde le format 1:1). */
@@ -330,8 +330,9 @@ onBeforeUnmount(() => {
                         :services="SERVICES"
                         :shops="SHOPS"
                     />
+                    <GuideFloorPlan v-show="currentPage === 8" />
                     <GuidePartners
-                        v-show="currentPage === 8"
+                        v-show="currentPage === 9"
                         :partners="PARTNERS"
                     />
                 </div>
