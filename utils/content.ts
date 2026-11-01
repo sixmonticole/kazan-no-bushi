@@ -89,8 +89,8 @@ export const SCHEDULE: ScheduleDay[] = [
             },
             { time: "10h – 12h", label: "Kihon", emphasis: "default" },
             { time: "12h – 13h", label: "Pause repas", emphasis: "muted" },
-            { time: "13h – 14h", label: "Kihon", emphasis: "default" },
-            { time: "14h – 15h", label: "Ji-geiko", emphasis: "default" },
+            { time: "13h – 14h30", label: "Kihon", emphasis: "default" },
+            { time: "14h30 – 15h15", label: "Ji-geiko", emphasis: "default" },
             {
                 time: "16h",
                 label: "Passage de grades",
@@ -113,6 +113,11 @@ export const SCHEDULE: ScheduleDay[] = [
         },
         events: [
             { time: "8h00", label: "Ouverture des portes", emphasis: "key" },
+            {
+                time: "8h30",
+                label: "Contrôle des shinaïs",
+                emphasis: "default",
+            },
             { time: "9h30", label: "Début des compétitions", emphasis: "key" },
         ],
         incomplete: true,
