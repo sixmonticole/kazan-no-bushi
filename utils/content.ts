@@ -260,6 +260,17 @@ export const GRADE_PRICES: GradePrice[] = [
     { grade: "3ᵉ dan", registration: "35 €", validation: "35 €" },
 ];
 
+/**
+ * Conditions exigées pour se présenter au passage de grade, par grade.
+ * Le supplément kata est facturé au même tarif que la présentation du grade.
+ */
+export const GRADE_CONDITIONS = [
+    "1ᵉʳ dan : 13 ans révolus minimum ; 1ᵉʳ kyu signé au passeport sportif et 3 licences, dont celle de l'année en cours.",
+];
+
+/** Horaire de début du passage de grade, le samedi soir. */
+export const GRADING_START_TIME = "À partir de 16h";
+
 /** Pièces et démarches exigées avant l'inscription. */
 export const REGISTRATION_REQUIREMENTS = [
     "Licence en cours de validité et certificat médical portant la mention « compétition » pour participer aux compétitions.",
@@ -295,18 +306,19 @@ export interface TeamCategory {
 export const TEAM_CATEGORIES: TeamCategory[] = [
     {
         name: "Junior et adulte (femme)",
-        details: "Équipes de 3 — naissance en 2009 et avant",
+        details: "Équipes de 3, extensible de 2 à 4 — nés en 2009 et avant",
     },
     {
         name: "Junior et adulte (mixte)",
-        details: "Équipes de 3 — naissance en 2009 et avant",
+        details: "Équipes de 3, extensible de 2 à 4 — nés en 2009 et avant",
     },
 ];
 
 /** Consignes matériel et accueil, valables pour les compétiteurs. */
 export const COMPETITION_NOTES = [
     "Contrôle des passeports et des shinaïs pour tous les compétiteurs.",
-    "Une équipe de trois combattants peut être complétée par un remplaçant.",
+    "Indiquez le nom de votre équipe dans le champ libre lors de l'inscription, ou « Ronin » si vous n'avez pas d'équipe identifiée.",
+    "Selon le nombre d'inscrits, une catégorie individuelle jeune non mixte pourra devenir mixte : la décision est prise le jour J.",
 ];
 
 export interface GuideHotel {

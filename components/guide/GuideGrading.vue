@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { GradePrice } from "~/utils/content";
-import { ONSITE_PAYMENT_NOTE } from "~/utils/content";
+import {
+    GRADE_CONDITIONS,
+    GRADING_START_TIME,
+    ONSITE_PAYMENT_NOTE,
+} from "~/utils/content";
 
 const props = defineProps<{
     prices: GradePrice[];
@@ -11,7 +15,7 @@ const tableRows = computed(() =>
 );
 
 const NOTES = [
-    "Le passage de grade se déroule le samedi soir, après la fin du stage (environ 16h30)",
+    `Le passage de grade se déroule le samedi soir, après la fin du stage (${GRADING_START_TIME}).`,
     "Les résultats sont annoncés sur place, puis publiés par le club dans les jours qui suivent.",
     "Prévoyez vos licences et votre passeport sportif le jour de l'examen.",
 ];
@@ -49,8 +53,12 @@ const NOTES = [
         />
 
         <GuideNote>
+            <p>
+                Les mêmes tarifs s'appliquent pour la présentation des
+                <b>katas seuls</b>.
+            </p>
             <p
-                class="text-[10.5px] font-bold tracking-[0.2em] uppercase text-plan-navy-700/70"
+                class="mt-2 text-[10.5px] font-bold tracking-[0.2em] uppercase text-plan-navy-700/70"
             >
                 Payer en espèces sur place
             </p>
@@ -58,6 +66,9 @@ const NOTES = [
                 {{ ONSITE_PAYMENT_NOTE }}
             </p>
         </GuideNote>
+
+        <GuideBlockTitle label="Conditions de passage" />
+        <GuideChecks :items="GRADE_CONDITIONS" tight />
 
         <GuideBlockTitle label="Bon à savoir" />
         <GuideChecks :items="NOTES" />
